@@ -6,7 +6,10 @@ package com.microwise.matchmaker.netconn;
 public class MessageBean {
     private String id;
     private String target;
-    private String command;
+    private String logType;
+    private int quality;
+    private long timestamp;
+    private ContentBean contentBean;
 
     public String getId() {
         return id;
@@ -24,12 +27,36 @@ public class MessageBean {
         this.target = target;
     }
 
-    public String getCommand() {
-        return command;
+    public String getLogType() {
+        return logType;
     }
 
-    public void setCommand(String command) {
-        this.command = command;
+    public void setLogType(String logType) {
+        this.logType = logType;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
+
+    public void setQuality(int quality) {
+        this.quality = quality;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public ContentBean getContentBean() {
+        return contentBean;
+    }
+
+    public void setContentBean(ContentBean contentBean) {
+        this.contentBean = contentBean;
     }
 
     @Override
@@ -37,7 +64,10 @@ public class MessageBean {
         return "MessageBean{" +
                 "id='" + id + '\'' +
                 ", target='" + target + '\'' +
-                ", command='" + command + '\'' +
+                ", logType='" + logType + '\'' +
+                ", quality=" + quality +
+                ", timestamp=" + timestamp +
+                ", content=" + contentBean +
                 '}';
     }
 }

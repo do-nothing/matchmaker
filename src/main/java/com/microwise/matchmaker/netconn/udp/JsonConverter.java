@@ -6,7 +6,7 @@ import com.microwise.matchmaker.netconn.MessageBean;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("jsonConverter")
 public class JsonConverter {
 
     private ObjectMapper mapper = new ObjectMapper();
@@ -30,14 +30,4 @@ public class JsonConverter {
         }
         return json;
     }
-    public static void main(String[] args) throws IOException {
-        String s = "{\"id\":\"123\"}";
-        JsonConverter jc = new JsonConverter();
-
-        MessageBean m = jc.getMessageBean(s);
-        String str = jc.getJsonString(m);
-
-        System.out.println(str);
-    }
-
 }

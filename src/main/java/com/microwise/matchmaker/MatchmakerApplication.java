@@ -1,8 +1,11 @@
 package com.microwise.matchmaker;
 
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.Arrays;
 
 import com.microwise.matchmaker.netconn.Messenger;
+import com.microwise.matchmaker.netconn.udp.MessageReceiver;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,9 +25,12 @@ public class MatchmakerApplication {
 	}
 
 	@Resource(name="udpMessenger")
-	public Messenger messenger;
+	private Messenger messenger;
 
-	//@Bean
+	@Resource
+	private MessageReceiver messageReceiver;
+
+	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			System.out.println("Let's inspect the beans provided by Spring Boot:");
@@ -36,10 +42,21 @@ public class MatchmakerApplication {
 		};
 	}
 
+	@Bean("udpServer")
+	public DatagramSocket udpServer(){
+		DatagramSocket  server = null;
+		try {
+			server = new DatagramSocket(5555);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		return server;
+	}
+
 	@Bean
 	public String startUDPServer(){
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
-		messenger.sendMessage(null);
+		messageReceiver.test();
 		return "udp server has been started.";
 	}
 }

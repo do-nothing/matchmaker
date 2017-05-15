@@ -1,5 +1,6 @@
 package com.microwise.matchmaker.netconn.udp;
 
+import com.microwise.matchmaker.netconn.ContentBean;
 import com.microwise.matchmaker.netconn.MessageBean;
 import org.junit.After;
 import org.junit.Before;
@@ -20,9 +21,15 @@ public class JsonConverterTest {
         mb = new MessageBean();
         mb.setId("001");
         mb.setTarget("007");
-        mb.setCommand("voice");
+        mb.setLogType("path");
+        mb.setQuality(0);
+        mb.setTimestamp(1494825498577l);
+        mb.setContentBean(new ContentBean());
+        mb.getContentBean().setCommand("updateUserInfo");
+        mb.getContentBean().setArgs(new String[]{"108.8549","34.19662"});
 
-        json = "{\"id\":\"001\",\"target\":\"007\",\"command\":\"voice\"}";
+        json = "{\"id\":\"001\",\"target\":\"007\",\"logType\":\"path\",\"quality\":0,\"timestamp\":1494825498577," +
+                "\"contentBean\":{\"command\":\"updateUserInfo\",\"args\":[\"108.8549\",\"34.19662\"]}}";
     }
 
     @Test
@@ -35,7 +42,7 @@ public class JsonConverterTest {
     @Test
     public void getJsonString() throws Exception {
         String value = jsonConverter.getJsonString(mb);
-        System.out.println(json);
+        System.out.println(value);
         assertEquals(json, value);
     }
 
