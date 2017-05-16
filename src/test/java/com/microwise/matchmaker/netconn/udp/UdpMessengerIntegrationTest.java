@@ -11,6 +11,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by lee on 5/16/2017.
  */
@@ -46,9 +48,9 @@ public class UdpMessengerIntegrationTest {
         client.receive(recvPacket);
         String recvStr = new String(recvPacket.getData() , 0 ,recvPacket.getLength());
 
-        //assertEquals(sendStr, recvStr);
+        assertEquals(sendStr, recvStr);
 
-        logger.debug("收到:" + recvStr);
+        logger.debug("received: :" + recvStr);
         client.close();
     }
 
@@ -60,13 +62,13 @@ public class UdpMessengerIntegrationTest {
 
     @Test
     public void concurrencyTest() throws Exception {
-        for(int i=0; i< 20000; i++) {
+        for(int i=0; i< 10000; i++) {
             mb.setId("guide" + i);
             String sendStr = jsonConverter.getJsonString(mb);
             startNewThread(sendStr);
         }
         Thread.sleep(10000);
-        logger.debug("!!!!!!!!!!!");
+        logger.debug("main thread end !!!!!!!!!!!!!!!!!!");
     }
     private void startNewThread(String json){
         Thread thread = new Thread(){
@@ -80,11 +82,5 @@ public class UdpMessengerIntegrationTest {
         };
         thread.setDaemon(true);
         thread.start();
-    }
-
-    public static void main(String[] args) throws Exception {
-        UdpMessengerIntegrationTest test = new UdpMessengerIntegrationTest();
-        test.setUp();
-        test.concurrencyTest();
     }
 }
