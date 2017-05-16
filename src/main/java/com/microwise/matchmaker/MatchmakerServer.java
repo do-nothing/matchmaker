@@ -36,7 +36,7 @@ public class MatchmakerServer {
     }
 
     private void processMessage(MessageBean mb){
-        logger.debug("" + mb);
+        logger.info("" + mb);
         messenger.sendMessage(mb);
     }
 }
