@@ -6,6 +6,9 @@ import java.util.Arrays;
 
 import com.microwise.matchmaker.netconn.Messenger;
 import com.microwise.matchmaker.netconn.udp.MessageReceiver;
+import com.microwise.matchmaker.netconn.udp.MessageSender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +20,7 @@ import javax.annotation.Resource;
 
 @SpringBootApplication
 public class MatchmakerApplication {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(MatchmakerApplication.class);
@@ -24,13 +28,14 @@ public class MatchmakerApplication {
 		app.run(args);
 	}
 
-	@Resource(name="udpMessenger")
-	private Messenger messenger;
-
-	@Resource
+	@Resource(name="matchmakerServer")
+	private MatchmakerServer matchmakerServer;
+	@Resource(name="messageReceiver")
 	private MessageReceiver messageReceiver;
+	@Resource(name="messageSender")
+	private MessageSender messageSender;
 
-	@Bean
+	//@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			System.out.println("Let's inspect the beans provided by Spring Boot:");
@@ -54,9 +59,12 @@ public class MatchmakerApplication {
 	}
 
 	@Bean
-	public String startUDPServer(){
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
-		messageReceiver.test();
-		return "udp server has been started.";
+	public String startMatchmakerServer(){
+		String str = "udp server has been started.";
+		messageReceiver.startServer();
+		messageSender.startServer();
+		matchmakerServer.startServer();
+		logger.info("***************************** " + str + " ***********************************");
+		return str;
 	}
 }

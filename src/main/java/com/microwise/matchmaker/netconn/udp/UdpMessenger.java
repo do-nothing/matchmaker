@@ -24,7 +24,15 @@ public class UdpMessenger implements Messenger {
 
     @Override
     public MessageBean getMessage() {
-        DatagramPacket packet = messageReceiver.getPacket();
+        DatagramPacket packet = null;
+        try {
+            packet = messageReceiver.getPacket();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(packet == null)
+            return null;
+
         String jsonString = packetHelper.getReceiveStr(packet);
         MessageBean messageBean = jsonConverter.getMessageBean(jsonString);
         packetHelper.setClientAddress(messageBean.getId(), packet);
@@ -35,6 +43,10 @@ public class UdpMessenger implements Messenger {
     public void sendMessage(MessageBean message) {
         String jsonString = jsonConverter.getJsonString(message);
         DatagramPacket packet = packetHelper.getDatagramPacket(message.getId(), jsonString);
-        messageSender.sendPacket(packet);
+        try {
+            messageSender.sendPacket(packet);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
