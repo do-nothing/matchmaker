@@ -1,10 +1,5 @@
 package com.microwise.matchmaker;
 
-import java.net.DatagramSocket;
-import java.net.SocketException;
-import java.util.Arrays;
-
-import com.microwise.matchmaker.netconn.Messenger;
 import com.microwise.matchmaker.netconn.udp.MessageReceiver;
 import com.microwise.matchmaker.netconn.udp.MessageSender;
 import org.slf4j.Logger;
@@ -17,6 +12,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.Resource;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class MatchmakerApplication {

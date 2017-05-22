@@ -1,8 +1,7 @@
 package com.microwise.matchmaker.netconn.udp;
 
-import com.microwise.matchmaker.netconn.ContentBean;
-import com.microwise.matchmaker.netconn.MessageBean;
-import org.junit.After;
+import com.microwise.matchmaker.form.ContentBean;
+import com.microwise.matchmaker.form.MessageBean;
 import org.junit.Before;
 import org.junit.Test;
 

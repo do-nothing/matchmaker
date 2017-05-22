@@ -1,6 +1,6 @@
 package com.microwise.matchmaker.netconn.udp;
 
-import com.microwise.matchmaker.netconn.MessageBean;
+import com.microwise.matchmaker.form.MessageBean;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -23,10 +23,11 @@ public class UdpMessengerIntegrationTest {
 
     private MessageBean mb;
     private JsonConverter jsonConverter = new JsonConverter();
+    private int count = 0;
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"001\",\"target\":\"007\",\"logType\":\"path\",\"quality\":0,\"timestamp\":1494825498577," +
+        String message = "{\"id\":\"001\",\"target\":\"001\",\"logType\":\"path\",\"quality\":0,\"timestamp\":1494825498577," +
                 "\"contentBean\":{\"command\":\"updateUserInfo\",\"args\":[\"108.8549\",\"34.19662\"]}}";
         mb = jsonConverter.getMessageBean(message);
     }
@@ -38,18 +39,19 @@ public class UdpMessengerIntegrationTest {
         InetAddress addr = InetAddress.getByName("127.0.0.1");
         int port = 5555;
         DatagramPacket sendPacket
-                = new DatagramPacket(sendBuf ,sendBuf.length , addr , port);
+                = new DatagramPacket(sendBuf, sendBuf.length, addr, port);
 
         client.send(sendPacket);
 
         byte[] recvBuf = new byte[548];
         DatagramPacket recvPacket
-                = new DatagramPacket(recvBuf , recvBuf.length);
+                = new DatagramPacket(recvBuf, recvBuf.length);
         client.receive(recvPacket);
-        String recvStr = new String(recvPacket.getData() , 0 ,recvPacket.getLength());
 
+        count++;
+
+        String recvStr = new String(recvPacket.getData(), 0, recvPacket.getLength());
         assertEquals(sendStr, recvStr);
-
         logger.debug("received: :" + recvStr);
         client.close();
     }
@@ -60,18 +62,21 @@ public class UdpMessengerIntegrationTest {
         testByBean(sendStr);
     }
 
+
     @Test
     public void concurrencyTest() throws Exception {
-        for(int i=0; i< 10000; i++) {
+        for (int i = 0; i < 1500; i++) {
             mb.setId("guide" + i);
             String sendStr = jsonConverter.getJsonString(mb);
             startNewThread(sendStr);
+            //Thread.sleep(1);
         }
         Thread.sleep(10000);
-        logger.debug("main thread end !!!!!!!!!!!!!!!!!!");
+        logger.debug(count + " main thread end !!!!!!!!!!!!!!!!!!");
     }
-    private void startNewThread(String json){
-        Thread thread = new Thread(){
+
+    private void startNewThread(String json) {
+        Thread thread = new Thread() {
             public void run() {
                 try {
                     testByBean(json);

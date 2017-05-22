@@ -1,7 +1,8 @@
 package com.microwise.matchmaker;
 
-import com.microwise.matchmaker.netconn.MessageBean;
+import com.microwise.matchmaker.form.MessageBean;
 import com.microwise.matchmaker.netconn.Messenger;
+import com.microwise.matchmaker.strategy.MessageProcesser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,8 @@ public class MatchmakerServer {
 
     @Resource(name="udpMessenger")
     private Messenger messenger ;
+    @Resource(name = "messageProcesser")
+    private MessageProcesser messageProcesser;
     private boolean isStart = false;
 
     public void startServer() {
@@ -28,15 +31,17 @@ public class MatchmakerServer {
         new Thread() {
             public void run() {
                 while (isStart) {
-                    MessageBean mb = messenger.getMessage();
-                    processMessage(mb);
+                    try {
+                        MessageBean oldMb = messenger.getMessage();
+                        logger.debug("" + oldMb);
+                        MessageBean newMb = messageProcesser.precessMassage(oldMb);
+                        messenger.sendMessage(newMb);
+                    } catch (Exception e) {
+                        logger.warn("Message processing failed!");
+                        e.printStackTrace();
+                    }
                 }
             }
         }.start();
-    }
-
-    private void processMessage(MessageBean mb){
-        logger.info("" + mb);
-        messenger.sendMessage(mb);
     }
 }

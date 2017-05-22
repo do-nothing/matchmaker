@@ -34,8 +34,8 @@ public class DatagramPacketHelper {
         addressPool.put(id, address);
     }
 
-    public DatagramPacket getDatagramPacket(String id, String sendStr){
-        Address address = addressPool.get(id);
+    public DatagramPacket getDatagramPacket(String target, String sendStr){
+        Address address = addressPool.get(target);
         byte[] sendBuf = sendStr.getBytes();
         DatagramPacket packet = new DatagramPacket(sendBuf ,sendBuf.length , address.address , address.port);
         return packet;

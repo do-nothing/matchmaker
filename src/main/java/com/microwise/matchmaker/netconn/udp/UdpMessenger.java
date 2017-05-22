@@ -1,6 +1,6 @@
 package com.microwise.matchmaker.netconn.udp;
 
-import com.microwise.matchmaker.netconn.MessageBean;
+import com.microwise.matchmaker.form.MessageBean;
 import com.microwise.matchmaker.netconn.Messenger;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +13,13 @@ import java.net.DatagramPacket;
 
 @Component("udpMessenger")
 public class UdpMessenger implements Messenger {
-    @Resource(name="messageReceiver")
+    @Resource(name = "messageReceiver")
     private MessageReceiver messageReceiver;
-    @Resource(name="messageSender")
+    @Resource(name = "messageSender")
     private MessageSender messageSender;
-    @Resource(name="jsonConverter")
+    @Resource(name = "jsonConverter")
     private JsonConverter jsonConverter;
-    @Resource(name="packetHelper")
+    @Resource(name = "packetHelper")
     private DatagramPacketHelper packetHelper;
 
     @Override
@@ -30,7 +30,7 @@ public class UdpMessenger implements Messenger {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(packet == null)
+        if (packet == null)
             return null;
 
         String jsonString = packetHelper.getReceiveStr(packet);
@@ -41,8 +41,10 @@ public class UdpMessenger implements Messenger {
 
     @Override
     public void sendMessage(MessageBean message) {
+        if (message == null)
+            return;
         String jsonString = jsonConverter.getJsonString(message);
-        DatagramPacket packet = packetHelper.getDatagramPacket(message.getId(), jsonString);
+        DatagramPacket packet = packetHelper.getDatagramPacket(message.getTarget(), jsonString);
         try {
             messageSender.sendPacket(packet);
         } catch (InterruptedException e) {

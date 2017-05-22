@@ -2,7 +2,7 @@ package com.microwise.matchmaker.netconn.udp;
 
 import java.io.IOException;
 
-import com.microwise.matchmaker.netconn.MessageBean;
+import com.microwise.matchmaker.form.MessageBean;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Component;
 
