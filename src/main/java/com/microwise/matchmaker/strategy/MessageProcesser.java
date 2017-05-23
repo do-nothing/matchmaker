@@ -18,9 +18,8 @@ public class MessageProcesser {
     private Map<String, IStrategy> commandMap;
 
     public MessageBean precessMassage(MessageBean oldMb) {
-        System.out.println(commandMap.get("updateUserInfo"));
         MessageBean newMb = null;
-        String commandStr = oldMb.getContentBean().getCommand();
+        String commandStr = oldMb.getStrategy();
         IStrategy commandStrategy = commandMap.get(commandStr);
         if(null != commandStrategy) {
             newMb = commandStrategy.processMessage(oldMb);

@@ -7,6 +7,7 @@ public class MessageBean {
     private String id;
     private String target;
     private String logType;
+    private String strategy;
     private int quality;
     private long timestamp;
     private ContentBean contentBean;
@@ -33,6 +34,14 @@ public class MessageBean {
 
     public void setLogType(String logType) {
         this.logType = logType;
+    }
+
+    public String getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(String strategy) {
+        this.strategy = strategy;
     }
 
     public int getQuality() {
@@ -65,9 +74,10 @@ public class MessageBean {
                 "id='" + id + '\'' +
                 ", target='" + target + '\'' +
                 ", logType='" + logType + '\'' +
+                ", strategy='" + strategy + '\'' +
                 ", quality=" + quality +
                 ", timestamp=" + timestamp +
-                ", content=" + contentBean +
+                ", contentBean=" + contentBean +
                 '}';
     }
 }
