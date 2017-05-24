@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by lee on 5/22/2017.
  */
-@Component("echoStrategy")
+@Component("echo")
 public class EchoStrategy implements IStrategy {
     @Override
     public MessageBean processMessage(MessageBean old) {

@@ -5,6 +5,8 @@ import com.microwise.smartservices.netconn.Messenger;
 import com.microwise.smartservices.strategy.MessageProcesser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,6 +16,7 @@ import java.net.UnknownHostException;
  * Created by lee on 5/16/2017.
  */
 
+@PropertySource("application.properties")
 @Component("exmanagerServer")
 public class ExmanagerServer {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -23,6 +26,12 @@ public class ExmanagerServer {
     @Resource(name = "messageProcesser")
     private MessageProcesser messageProcesser;
     private boolean isStart = false;
+    @Value("${ip}")
+    private String ip;
+    @Value("${port}")
+    private int port;
+    @Value("${id}")
+    private String id;
 
     public void startServer() {
         if (isStart)
@@ -30,7 +39,7 @@ public class ExmanagerServer {
 
         isStart = true;
         startReceiver();
-        //startHeartbeat();
+        startHeartbeat();
     }
 
     private void startReceiver() {
@@ -53,13 +62,13 @@ public class ExmanagerServer {
 
     private void startHeartbeat(){
         try {
-            messenger.setServerAddress("121.42.196.133", 5555);
+            messenger.setServerAddress(ip, port);
         } catch (UnknownHostException e) {
             e.printStackTrace();
             return;
         }
-        MessageBean mb = messenger.getMessage();
-        mb.setId("kiosk_001");
+        MessageBean mb = new MessageBean();
+        mb.setId(id);
         mb.setTarget("server");
         mb.setLogType("nolog");
         mb.setQuality(0);

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by lee on 5/23/2017.
  */
-@Component("heartbeatStrategy")
+@Component("heartbeat")
 public class HeartbeatStrategy implements IStrategy {
     @Override
     public MessageBean processMessage(MessageBean old) {

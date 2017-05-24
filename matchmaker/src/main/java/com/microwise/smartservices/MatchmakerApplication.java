@@ -4,18 +4,21 @@ import com.microwise.smartservices.netconn.udp.MessageReceiver;
 import com.microwise.smartservices.netconn.udp.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.annotation.Resource;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Arrays;
 
+@PropertySource("application.properties")
 @SpringBootApplication
 public class MatchmakerApplication {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -32,6 +35,8 @@ public class MatchmakerApplication {
 	private MessageReceiver messageReceiver;
 	@Resource(name="messageSender")
 	private MessageSender messageSender;
+	@Value("${port}")
+	private int port;
 
 	//@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
@@ -49,7 +54,7 @@ public class MatchmakerApplication {
 	public DatagramSocket udpServer(){
 		DatagramSocket  server = null;
 		try {
-			server = new DatagramSocket(5555);
+			server = new DatagramSocket(port);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

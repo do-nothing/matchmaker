@@ -12,14 +12,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * Created by lee on 5/16/2017.
  */
 
 //To test this, you must start MatchmakerApplication first.
-public class UdpMessengerIntegrationTest {
+public class EchoMessengerIntegrationTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private MessageBean mb;
@@ -28,7 +26,7 @@ public class UdpMessengerIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"001\",\"target\":\"007\",\"logType\":\"path\",\"strategy\":\"echoStrategy\",\"quality\":0,\"timestamp\":1494825498577," +
+        String message = "{\"id\":\"001\",\"target\":\"007\",\"logType\":\"path\",\"strategy\":\"echo\",\"quality\":0,\"timestamp\":1494825498577," +
                 "\"contentBean\":{\"command\":\"updateUserInfo\",\"args\":[\"108.8549\",\"34.19662\"]}}";
         mb = jsonConverter.getMessageBean(message);
     }
