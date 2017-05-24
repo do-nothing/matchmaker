@@ -57,7 +57,7 @@ public class ExmanagerApplication {
 	}
 
 	@Bean
-	public String startMatchmakerServer(){
+	public String startExmanagerServer(){
 		String str = "udp server has been started.";
 		messageReceiver.startServer();
 		messageSender.startServer();

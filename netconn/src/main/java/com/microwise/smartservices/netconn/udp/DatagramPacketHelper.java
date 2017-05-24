@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 /**
@@ -39,5 +40,11 @@ public class DatagramPacketHelper {
         byte[] sendBuf = sendStr.getBytes();
         DatagramPacket packet = new DatagramPacket(sendBuf ,sendBuf.length , address.address , address.port);
         return packet;
+    }
+
+    public void setServerAddress(String ipstr, int port) throws UnknownHostException {
+        InetAddress ip = InetAddress.getByName(ipstr);
+        Address address = new Address(ip, port);
+        addressPool.put("server", address);
     }
 }

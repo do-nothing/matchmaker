@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.net.DatagramPacket;
+import java.net.UnknownHostException;
 
 /**
  * Created by John on 2017/5/14.
@@ -37,6 +38,11 @@ public class UdpMessenger implements Messenger {
         MessageBean messageBean = jsonConverter.getMessageBean(jsonString);
         packetHelper.setClientAddress(messageBean.getId(), packet);
         return messageBean;
+    }
+
+    @Override
+    public void setServerAddress(String ip, int port) throws UnknownHostException {
+        packetHelper.setServerAddress(ip, port);
     }
 
     @Override

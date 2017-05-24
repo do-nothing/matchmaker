@@ -1,0 +1,119 @@
+2017-05-24 18:08:43.905  INFO 1048 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 1048 (E:\work0\smartservices\exmanager\target\classes started by lee in E:\work0\smartservices\exmanager)
+2017-05-24 18:08:43.905 DEBUG 1048 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:08:43.905  INFO 1048 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:08:43.936  INFO 1048 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@b7dd107: startup date [Wed May 24 18:08:43 CST 2017]; root of context hierarchy
+2017-05-24 18:08:44.217  WARN 1048 --- [main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageReceiver': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'udpServer' available
+2017-05-24 18:08:44.217  INFO 1048 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2017-05-24 18:08:44.264 ERROR 1048 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean named 'udpServer' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'udpServer' in your configuration.
+
+2017-05-24 18:50:35.680  INFO 12084 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 12084 (E:\work0\smartservices\exmanager1\target\classes started by lee in E:\work0\smartservices\exmanager1)
+2017-05-24 18:50:35.680 DEBUG 12084 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:50:35.680  INFO 12084 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:50:35.711  INFO 12084 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:50:35 CST 2017]; root of context hierarchy
+2017-05-24 18:51:14.261  INFO 2420 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 2420 (E:\work0\smartservices\exmanager1\target\classes started by lee in E:\work0\smartservices\exmanager1)
+2017-05-24 18:51:14.261 DEBUG 2420 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:51:14.261  INFO 2420 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:51:14.293  INFO 2420 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:51:14 CST 2017]; root of context hierarchy
+2017-05-24 18:51:14.527  WARN 2420 --- [main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'exmanagerServer': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'udpMessenger': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageReceiver': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'udpServer' available
+2017-05-24 18:51:14.527  INFO 2420 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2017-05-24 18:51:14.574 ERROR 2420 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean named 'udpServer' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'udpServer' in your configuration.
+
+2017-05-24 18:53:57.635  INFO 13000 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 13000 (E:\work0\smartservices\exmanager1\target\classes started by lee in E:\work0\smartservices\exmanager1)
+2017-05-24 18:53:57.635 DEBUG 13000 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:53:57.635  INFO 13000 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:53:57.667  INFO 13000 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:53:57 CST 2017]; root of context hierarchy
+2017-05-24 18:53:57.964  WARN 13000 --- [main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageReceiver': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'udpServer' available
+2017-05-24 18:53:57.964  INFO 13000 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2017-05-24 18:53:58.010 ERROR 13000 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean named 'udpServer' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'udpServer' in your configuration.
+
+2017-05-24 18:54:49.675  INFO 14104 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 14104 (E:\work0\smartservices\exmanager1\target\classes started by lee in E:\work0\smartservices\exmanager1)
+2017-05-24 18:54:49.675 DEBUG 14104 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:54:49.675  INFO 14104 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:54:49.707  INFO 14104 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:54:49 CST 2017]; root of context hierarchy
+2017-05-24 18:55:04.824  INFO 1092 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 1092 (E:\work0\smartservices\exmanager1\target\classes started by lee in E:\work0\smartservices\exmanager1)
+2017-05-24 18:55:04.824 DEBUG 1092 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:55:04.824  INFO 1092 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:55:04.840  INFO 1092 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:55:04 CST 2017]; root of context hierarchy
+2017-05-24 18:55:05.215  INFO 1092 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2017-05-24 18:55:05.215  INFO 1092 --- [main] c.m.smartservices.ExmanagerApplication   : Started ExmanagerApplication in 0.531 seconds (JVM running for 0.729)
+2017-05-24 18:55:05.215  INFO 1092 --- [Thread-2] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:55:04 CST 2017]; root of context hierarchy
+2017-05-24 18:55:05.215  INFO 1092 --- [Thread-2] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2017-05-24 18:57:30.646  INFO 6216 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 6216 (E:\work0\smartservices\exmanager\target\classes started by lee in E:\work0\smartservices\exmanager)
+2017-05-24 18:57:30.662 DEBUG 6216 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:57:30.662  INFO 6216 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:57:30.693  INFO 6216 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:57:30 CST 2017]; root of context hierarchy
+2017-05-24 18:57:31.084  INFO 6216 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2017-05-24 18:57:31.100  INFO 6216 --- [main] c.m.smartservices.ExmanagerApplication   : Started ExmanagerApplication in 0.61 seconds (JVM running for 0.94)
+2017-05-24 18:57:31.100  INFO 6216 --- [Thread-2] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:57:30 CST 2017]; root of context hierarchy
+2017-05-24 18:57:31.100  INFO 6216 --- [Thread-2] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2017-05-24 18:57:42.823  INFO 32 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 32 (E:\work0\smartservices\exmanager\target\classes started by lee in E:\work0\smartservices\exmanager)
+2017-05-24 18:57:42.823 DEBUG 32 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:57:42.823  INFO 32 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:57:42.854  INFO 32 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:57:42 CST 2017]; root of context hierarchy
+2017-05-24 18:57:43.229  INFO 32 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2017-05-24 18:57:43.229  INFO 32 --- [main] c.m.smartservices.ExmanagerApplication   : Started ExmanagerApplication in 0.547 seconds (JVM running for 0.751)
+2017-05-24 18:57:43.229  INFO 32 --- [Thread-2] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:57:42 CST 2017]; root of context hierarchy
+2017-05-24 18:57:43.229  INFO 32 --- [Thread-2] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2017-05-24 18:58:01.332  INFO 12848 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 12848 (E:\work0\smartservices\exmanager\target\classes started by lee in E:\work0\smartservices\exmanager)
+2017-05-24 18:58:01.332 DEBUG 12848 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:58:01.332  INFO 12848 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:58:01.348  INFO 12848 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:58:01 CST 2017]; root of context hierarchy
+2017-05-24 18:58:01.660  INFO 12848 --- [main] ication$$EnhancerBySpringCGLIB$$2d97ae87 : ***************************** udp server has been started. ***********************************
+2017-05-24 18:58:01.738  INFO 12848 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2017-05-24 18:58:01.754  INFO 12848 --- [main] c.m.smartservices.ExmanagerApplication   : Started ExmanagerApplication in 0.562 seconds (JVM running for 0.789)
+2017-05-24 18:58:29.293  INFO 12324 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 12324 (E:\work0\smartservices\exmanager\target\classes started by lee in E:\work0\smartservices\exmanager)
+2017-05-24 18:58:29.293 DEBUG 12324 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:58:29.293  INFO 12324 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:58:29.324  INFO 12324 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:58:29 CST 2017]; root of context hierarchy
+2017-05-24 18:58:55.894  INFO 1400 --- [main] c.m.smartservices.ExmanagerApplication   : Starting ExmanagerApplication on DESKTOP-L37KFOV with PID 1400 (E:\work0\smartservices\exmanager\target\classes started by lee in E:\work0\smartservices\exmanager)
+2017-05-24 18:58:55.894 DEBUG 1400 --- [main] c.m.smartservices.ExmanagerApplication   : Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE
+2017-05-24 18:58:55.894  INFO 1400 --- [main] c.m.smartservices.ExmanagerApplication   : No active profile set, falling back to default profiles: default
+2017-05-24 18:58:55.925  INFO 1400 --- [main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@74ad1f1f: startup date [Wed May 24 18:58:55 CST 2017]; root of context hierarchy
+2017-05-24 18:58:56.222  INFO 1400 --- [main] ication$$EnhancerBySpringCGLIB$$2c09b74f : ***************************** udp server has been started. ***********************************
+2017-05-24 18:58:56.300  INFO 1400 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2017-05-24 18:58:56.316  INFO 1400 --- [main] c.m.smartservices.ExmanagerApplication   : Started ExmanagerApplication in 0.562 seconds (JVM running for 0.777)

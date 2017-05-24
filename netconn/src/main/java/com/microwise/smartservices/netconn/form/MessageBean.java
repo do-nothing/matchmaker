@@ -10,7 +10,7 @@ public class MessageBean {
     private String strategy;
     private int quality;
     private long timestamp;
-    private ContentBean contentBean;
+    private ContentBean contentBean = new ContentBean();
 
     public String getId() {
         return id;
