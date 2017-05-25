@@ -61,6 +61,7 @@ public class ExmanagerServer {
     }
 
     private void startHeartbeat(){
+        logger.info(id + " start heartbeat. -->" + ip + ":" + port);
         try {
             messenger.setServerAddress(ip, port);
         } catch (UnknownHostException e) {
@@ -81,7 +82,7 @@ public class ExmanagerServer {
                         messenger.sendMessage(mb);
                         Thread.sleep(5000);
                     } catch (Exception e) {
-                        logger.warn("Message processing failed!");
+                        logger.warn("Heartbeat sending failed!");
                         e.printStackTrace();
                     }
                 }
