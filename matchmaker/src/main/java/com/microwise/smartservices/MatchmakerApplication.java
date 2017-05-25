@@ -18,7 +18,6 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Arrays;
 
-@PropertySource("application.properties")
 @SpringBootApplication
 public class MatchmakerApplication {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -35,8 +34,6 @@ public class MatchmakerApplication {
 	private MessageReceiver messageReceiver;
 	@Resource(name="messageSender")
 	private MessageSender messageSender;
-	@Value("${port}")
-	private int port;
 
 	//@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
@@ -53,8 +50,10 @@ public class MatchmakerApplication {
 	@Bean("udpServer")
 	public DatagramSocket udpServer(){
 		DatagramSocket  server = null;
+		int port = 5555;
 		try {
 			server = new DatagramSocket(port);
+			logger.info("Udp server start at port : " + port);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
