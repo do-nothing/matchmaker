@@ -51,4 +51,15 @@ public class ShutdownIntegrationTest {
         String sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
     }
+
+    @Test
+    public void vrGroupPcTest() throws Exception {
+        String[] group = new String[]{"lijun","fengbin","jianghao","yangwei"};
+        for(String one : group){
+            mb.setTarget(one);
+            String sendStr = jsonConverter.getJsonString(mb);
+            logger.debug(sendStr);
+            testByBean(sendStr);
+        }
+    }
 }

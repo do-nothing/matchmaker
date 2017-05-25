@@ -26,8 +26,8 @@ public class RestartIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"monitor\",\"target\":\"kiosk_001\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":0,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"restart\",\"args\":[\"guanniao\",\"v2.0\"]}}";
+        String message = "{\"id\":\"monitor\",\"target\":\"lijun\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":0,\"timestamp\":1494825498577," +
+                "\"contentBean\":{\"command\":\"restart\",\"args\":[\"hanzi\",\"\"]}}";
         mb = jsonConverter.getMessageBean(message);
     }
 
@@ -48,5 +48,16 @@ public class RestartIntegrationTest {
     public void udpMessengerTest() throws Exception {
         String sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
+    }
+
+    @Test
+    public void vrGroupPcTest() throws Exception {
+        String[] group = new String[]{"lijun","fengbin","jianghao","yangwei"};
+        for(String one : group){
+            mb.setTarget(one);
+            String sendStr = jsonConverter.getJsonString(mb);
+            logger.debug(sendStr);
+            testByBean(sendStr);
+        }
     }
 }
