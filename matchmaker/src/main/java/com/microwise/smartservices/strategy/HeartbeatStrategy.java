@@ -10,6 +10,13 @@ import org.springframework.stereotype.Component;
 public class HeartbeatStrategy implements IStrategy {
     @Override
     public MessageBean processMessage(MessageBean old) {
-        return null;
+        MessageBean newMb;
+        if ("monitor".equals(old.getId())) {
+            newMb = null;
+        } else {
+            newMb = old;
+            newMb.setTarget("monitor");
+        }
+        return newMb;
     }
 }
