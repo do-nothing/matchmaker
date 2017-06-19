@@ -54,7 +54,7 @@ public class ExmanagerApplication {
 	public DatagramSocket udpServer(){
 		DatagramSocket  server = null;
 		try {
-			server = new DatagramSocket();
+			server = new DatagramSocket(5556);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

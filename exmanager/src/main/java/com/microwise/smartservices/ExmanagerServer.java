@@ -33,6 +33,9 @@ public class ExmanagerServer {
     @Value("${id}")
     private String id;
 
+    @Resource(name="appInfoViewer")
+    private AppInfoViewer appInfoViewer ;
+
     public void startServer() {
         if (isStart)
             return;
@@ -48,7 +51,13 @@ public class ExmanagerServer {
                 while (isStart) {
                     try {
                         MessageBean oldMb = messenger.getMessage();
-                        logger.debug("" + oldMb);
+
+                        if("heartbeat".equals(oldMb.getStrategy())){
+                            appInfoViewer.setAppInfo(oldMb.getContentBean().getArgs());
+                        }else{
+                            logger.debug("" + oldMb);
+                        }
+
                         MessageBean newMb = messageProcesser.precessMassage(oldMb);
                         messenger.sendMessage(newMb);
                     } catch (Exception e) {
@@ -74,11 +83,15 @@ public class ExmanagerServer {
         mb.setLogType("nolog");
         mb.setQuality(0);
         mb.setStrategy("heartbeat");
+
+        mb.getContentBean().setCommand("set_app_info");
+
         new Thread() {
             public void run() {
                 while (isStart) {
                     try {
                         mb.setTimestamp(System.currentTimeMillis());
+                        mb.getContentBean().setArgs(appInfoViewer.getAppInfo());
                         messenger.sendMessage(mb);
                         Thread.sleep(5000);
                     } catch (Exception e) {
