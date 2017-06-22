@@ -2,8 +2,10 @@ package com.microwise.smartservices;
 
 import com.microwise.smartservices.netconn.udp.MessageReceiver;
 import com.microwise.smartservices.netconn.udp.MessageSender;
+import com.microwise.smartservices.persistency.mapper.HotelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +21,7 @@ import java.net.SocketException;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class MatchmakerApplication {
+public class MatchmakerApplication implements CommandLineRunner {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public static void main(String[] args) {
@@ -68,5 +70,15 @@ public class MatchmakerApplication {
 		matchmakerServer.startServer();
 		logger.info("***************************** " + str + " ***********************************");
 		return str;
+	}
+
+
+	@Resource
+	private HotelMapper hotelMapper;
+
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println(this.hotelMapper.selectByCityId(1));
+
 	}
 }
