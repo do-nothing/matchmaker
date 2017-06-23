@@ -17,8 +17,7 @@ INSERT INTO event_types VALUES (4, '安装应用', null, now(), now());
 INSERT INTO event_types VALUES (5, '启动应用', null, now(), now());
 INSERT INTO event_types VALUES (6, '应用有人使用', null, now(), now());
 INSERT INTO event_types VALUES (7, '应用空闲', null, now(), now());
-INSERT INTO event_types VALUES (8, '电源开启', null, now(), now());
-INSERT INTO event_types VALUES (9, '电源关闭', null, now(), now());
+INSERT INTO event_types VALUES (8, '电源控制器状态变更', null, now(), now());
 
 drop table if exists device_types;
 
