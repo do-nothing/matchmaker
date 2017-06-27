@@ -6,6 +6,7 @@ package com.microwise.smartservices.pomanager;
 public class PoInfo {
     public String id;
     public String status;
+    public String targetStatus;
     public boolean isAlive = false;
     public boolean needToChangeStatus = true;
 }

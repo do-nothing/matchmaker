@@ -25,6 +25,7 @@ public class PoController {
         this.socket = socket;
         if (socket != null) {
             try {
+                socket.setSoTimeout(100000);
                 inputStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
 
@@ -51,16 +52,25 @@ public class PoController {
                         } else {
                             str += " " + ByteTools.bytesToHexString(bytes, len);
                         }
-
+                        //System.out.println("receive --> " + str);
                         if (str.startsWith("FE 04 10")) {
                             poInfo.id = ByteTools.getIdByString(str);
                             if (poInfo.id != null) {
                                 poMap.put(poInfo.id, PoController.this);
-                                logger.debug("poMap put a device --> " + poInfo.id);
+                                logger.debug("a device '" + poInfo.id + "' from " + socket.getInetAddress().getHostAddress());
+                                logger.debug("put the device " + poInfo.id + " into poMap");
                             }
                         } else if (str.startsWith("FE 01 01")) {
                             poInfo.status = ByteTools.getStatusByString(str);
+                            if (poInfo.targetStatus == null) {
+                                poInfo.targetStatus = poInfo.status;
+                            }
                             logger.debug(poInfo.id + "'s status --> " + poInfo.status);
+                            poInfo.needToChangeStatus = false;
+
+                            if (!poInfo.status.equals(poInfo.targetStatus)) {
+                                setDeviceStatus();
+                            }
                         } else {
                             poInfo.needToChangeStatus = true;
                         }
@@ -79,7 +89,9 @@ public class PoController {
 
     private void detonate() {
         poInfo.isAlive = false;
-        poMap.remove(poInfo.id);
+        if (poMap.get(poInfo.id) == this) {
+            poMap.remove(poInfo.id);
+        }
         if (socket != null) {
             try {
                 socket.close();
@@ -87,6 +99,7 @@ public class PoController {
                 e.printStackTrace();
             }
         }
+        logger.debug(poInfo.id + " is destroyed.");
     }
 
     private void askIdUntilAnswer() {
@@ -97,17 +110,25 @@ public class PoController {
         PoHelper.askStatus(poInfo, outputStream);
     }
 
-    public void setDeviceStatus(String binaryString){
+    private void setDeviceStatus() {
         try {
-            PoHelper.setDeviceStatus(outputStream, binaryString);
-            logger.debug("change " + poInfo.id + "'s status to --> " + binaryString);
+            PoHelper.setDeviceStatus(poInfo, outputStream);
+            logger.debug("change " + poInfo.id + "'s status to --> " + poInfo.targetStatus);
+            poInfo.needToChangeStatus = true;
         } catch (Exception e) {
             e.printStackTrace();
             detonate();
         }
     }
 
-    public String getDeviceStatus(){
+    public void setDeviceStatus(String binaryString) {
+        if (binaryString == null || binaryString.length() != 4)
+            return;
+        poInfo.targetStatus = binaryString;
+        setDeviceStatus();
+    }
+
+    public String getDeviceStatus() {
         return poInfo.status;
     }
 }

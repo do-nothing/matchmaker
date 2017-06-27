@@ -44,8 +44,20 @@ public class ChangeStatusIntegrationTest {
     }
 
     @Test
-    public void udpMessengerTest() throws Exception {
+    public void sendRandomCommandTest() throws Exception {
+        byte rd = (byte)(Math.random()*16);
+        String str = ByteTools.get01ByByte(rd);
+        System.out.println(str);
+        mb.getContentBean().setArgs(new String[]{str});
         String sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
+    }
+
+    @Test
+    public void groupTest() throws Exception {
+        for(int i=0; i<500; i++){
+            sendRandomCommandTest();
+            Thread.sleep(2500);
+        }
     }
 }

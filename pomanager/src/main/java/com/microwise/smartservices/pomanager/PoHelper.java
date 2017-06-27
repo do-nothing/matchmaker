@@ -11,20 +11,21 @@ import java.io.OutputStream;
  * Created by lee on 6/26/2017.
  */
 public class PoHelper {
-    public static void setDeviceStatus(OutputStream outputStream, String binaryString) throws Exception {
-        if (binaryString == null || binaryString.length() != 4) {
-            return;
-        } else {
-            for (int i = 0; i < 4; i++) {
-                if ("1".equals(binaryString.substring(i, i + 1))) {
-                    String command = CommandDict.turnOnArray[i];
-                    outputStream.write(ByteTools.hexStringToBytes(command));
-                } else {
-                    String command = CommandDict.turnOffArray[i];
-                    outputStream.write(ByteTools.hexStringToBytes(command));
-                }
-                Thread.sleep(100);
+    public static void setDeviceStatus(PoInfo poInfo, OutputStream outputStream) throws Exception {
+        for (int i = 0; i < 4; i++) {
+            if(poInfo.status.substring(i, i + 1).equals(poInfo.targetStatus.substring(i, i + 1))){
+                continue;
             }
+            String command = "";
+            if ("1".equals(poInfo.targetStatus.substring(i, i + 1))) {
+                command = CommandDict.turnOnArray[i];
+            } else {
+                command = CommandDict.turnOffArray[i];
+            }
+            //System.out.println("command --> " + command);
+            outputStream.write(ByteTools.hexStringToBytes(command));
+            outputStream.flush();
+            Thread.sleep(100);
         }
     }
 
@@ -34,6 +35,7 @@ public class PoHelper {
                 try {
                     while (poInfo.isAlive && poInfo.id == null) {
                         String command = CommandDict.ASK_ID;
+                        //System.out.println("command --> " + command);
                         outputStream.write(ByteTools.hexStringToBytes(command));
                         Thread.sleep(1900);
                     }
@@ -56,12 +58,10 @@ public class PoHelper {
                         if (poInfo.needToChangeStatus) {
                             Thread.sleep(1000);
                             String command = CommandDict.ASK_STATUS;
+                            //System.out.println("command --> " + command);
                             outputStream.write(ByteTools.hexStringToBytes(command));
-                            Thread.sleep(1000);
-                            if (poInfo.status != null) {
-                                poInfo.needToChangeStatus = false;
-                            }
                         }
+                        Thread.sleep(1000);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

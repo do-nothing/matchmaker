@@ -46,10 +46,14 @@ public class PoServer {
                 while (true) {
                     try {
                         MessageBean mb = messenger.getMessage();
-                        if("setStatus".equals(mb.getContentBean().getCommand())){
+                        if ("setStatus".equals(mb.getContentBean().getCommand())) {
                             PoController poController = poMap.get(mb.getTarget());
-                            String status = mb.getContentBean().getArgs()[0].toString();
-                            poController.setDeviceStatus(status);
+                            if (poController != null) {
+                                String status = mb.getContentBean().getArgs()[0].toString();
+                                poController.setDeviceStatus(status);
+                            }else{
+                                logger.warn(mb.getTarget() + "is not online!");
+                            }
                         }
                     } catch (Exception e) {
                         logger.warn("Message processing failed!");
@@ -97,10 +101,11 @@ public class PoServer {
                 while (true) {
                     try {
                         mb.setTimestamp(System.currentTimeMillis());
-                        if(poMap.isEmpty()){
+                        if (poMap.isEmpty()) {
                             mb.setId(id);
+                            mb.getContentBean().setArgs(null);
                             messenger.sendMessage(mb);
-                        }else {
+                        } else {
                             for (Map.Entry<String, PoController> entry : poMap.entrySet()) {
                                 mb.setId(entry.getKey());
                                 mb.getContentBean().setArgs(new String[]{entry.getValue().getDeviceStatus()});

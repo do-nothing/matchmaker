@@ -73,7 +73,7 @@ public class ByteTools {
         return rt;
     }
 
-    private static String get01ByByte(byte bt){
+    public static String get01ByByte(byte bt){
         String str = "";
         str = Integer.toBinaryString(bt + 16);
         str = str.substring(1,5);
