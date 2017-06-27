@@ -71,18 +71,22 @@ public class PoController {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    poInfo.isAlive = false;
-                    poMap.remove(poInfo.id);
-                    if (socket != null) {
-                        try {
-                            socket.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    detonate();
                 }
             }
         }.start();
+    }
+
+    private void detonate() {
+        poInfo.isAlive = false;
+        poMap.remove(poInfo.id);
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void askIdUntilAnswer() {
@@ -93,8 +97,14 @@ public class PoController {
         PoHelper.askStatus(poInfo, outputStream);
     }
 
-    public void setDeviceStatus(String binaryString) throws Exception {
-        PoHelper.setDeviceStatus(outputStream, binaryString);
+    public void setDeviceStatus(String binaryString){
+        try {
+            PoHelper.setDeviceStatus(outputStream, binaryString);
+            logger.debug("change " + poInfo.id + "'s status to --> " + binaryString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            detonate();
+        }
     }
 
     public String getDeviceStatus(){

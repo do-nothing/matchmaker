@@ -1,5 +1,7 @@
 package com.microwise.smartservices;
 
+import com.microwise.smartservices.netconn.udp.MessageReceiver;
+import com.microwise.smartservices.netconn.udp.MessageSender;
 import com.microwise.smartservices.pomanager.PoServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +18,11 @@ import java.net.SocketException;
 @SpringBootApplication
 public class PomanagerApplication implements CommandLineRunner{
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-	@Resource
+	@Resource(name="messageReceiver")
+	private MessageReceiver messageReceiver;
+	@Resource(name="messageSender")
+	private MessageSender messageSender;
+	@Resource(name="poServer")
 	private PoServer poServer;
 
 	public static void main(String[] args) {
@@ -39,6 +44,9 @@ public class PomanagerApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		poServer.startServer();
+		logger.debug("************* poServer is start!  ***************");
+		messageReceiver.startServer();
+		messageSender.startServer();
+		poServer.startServers();
 	}
 }
