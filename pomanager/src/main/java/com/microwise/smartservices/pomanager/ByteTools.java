@@ -5,7 +5,7 @@ package com.microwise.smartservices.pomanager;
  */
 public class ByteTools {
 
-    public static String bytesToHexString(byte[] bytes, int len){
+    public static String bytesToHexString(byte[] bytes, int len) {
         StringBuilder stringBuilder = new StringBuilder("");
         if (bytes == null || bytes.length == 0) {
             return null;
@@ -29,6 +29,7 @@ public class ByteTools {
         if (hexString == null || hexString.equals("")) {
             return null;
         }
+        hexString = hexString.replaceAll(" ", "");
         hexString = hexString.toUpperCase();
         int length = hexString.length() / 2;
         char[] hexChars = hexString.toCharArray();
@@ -44,11 +45,39 @@ public class ByteTools {
         return (byte) "0123456789ABCDEF".indexOf(c);
     }
 
-    public static String getIdByBytes(byte[] bytes){
+    public static String getIdByString(String str) {
+        byte[] bytes = hexStringToBytes(str);
+        if (bytes.length == 21)
+            return getIdByBytes(bytes);
+        else return null;
+    }
+
+    private static String getIdByBytes(byte[] bytes) {
         byte[] idValue = new byte[16];
-        for(int i=0; i<16; i++){
+        for (int i = 0; i < 16; i++) {
             idValue[i] = bytes[i + 3];
         }
         return new String(idValue);
+    }
+
+    public static String getStatusByString(String str) {
+        byte[] bytes = hexStringToBytes(str);
+        return getStatusByBytes(bytes);
+    }
+
+    private static String getStatusByBytes(byte[] bytes) {
+        String rt = "" + bytes[0];
+        if (bytes[0] == -2 && bytes[1] == 1 && bytes[2] == 1) {
+            rt = get01ByByte(bytes[3]);
+        }
+        return rt;
+    }
+
+    private static String get01ByByte(byte bt){
+        String str = "";
+        str = Integer.toBinaryString(bt + 16);
+        str = str.substring(1,5);
+        StringBuilder sb = new StringBuilder(str).reverse();
+        return sb.toString();
     }
 }

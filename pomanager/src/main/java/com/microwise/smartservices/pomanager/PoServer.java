@@ -1,42 +1,32 @@
 package com.microwise.smartservices.pomanager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lee on 6/23/2017.
  */
 @Component
 public class PoServer {
-    public void startServer() {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Map<String, PoController> poMap = new HashMap<String, PoController>();
 
+    public void startServer() {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(8888);
-            System.out.println("服务端已启动，等待客户端连接.");
-            Socket socket = serverSocket.accept();
-            System.out.println("客户端已连接.来自 -->" + socket.getPort());
-
-            InputStream inputStream = socket.getInputStream();
-            int len = 0;
-            while (len != -1) {
-                byte[] bytes = new byte[32];
-                len = inputStream.read(bytes);
-                String str = null;
-                if (len == 21) {
-                    str = ByteTools.getIdByBytes(bytes);
-                } else {
-                    str = ByteTools.bytesToHexString(bytes, len);
-                }
-                System.out.println(str);
+            serverSocket = new ServerSocket(5557);
+            logger.debug("************* poServer has been started!  ***************");
+            while(true) {
+                Socket socket = serverSocket.accept();
+                new PoController(poMap, socket);
             }
-
-            inputStream.close();
-            socket.close();
-            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

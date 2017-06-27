@@ -25,9 +25,13 @@ public class PoServerTest {
             outputStream.write(bytes);
             outputStream.flush();
 
+            /*InputStream inputStream = socket.getInputStream();
+            int len = inputStream.read(bytes);*/
+
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
