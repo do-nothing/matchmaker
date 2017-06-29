@@ -49,8 +49,12 @@ public class PoServer {
                         if ("setStatus".equals(mb.getContentBean().getCommand())) {
                             PoController poController = poMap.get(mb.getTarget());
                             if (poController != null) {
-                                String status = mb.getContentBean().getArgs()[0].toString();
-                                poController.setDeviceStatus(status);
+                                Object[] args = mb.getContentBean().getArgs();
+                                if(args.length == 1){
+                                    poController.setDeviceStatus(args[0].toString());
+                                }else if(args.length == 2){
+                                    poController.setDeviceStatus(args[0].toString(), args[1].toString());
+                                }
                             }else{
                                 logger.warn(mb.getTarget() + "is not online!");
                             }

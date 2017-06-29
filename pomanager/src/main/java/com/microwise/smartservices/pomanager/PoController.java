@@ -19,8 +19,11 @@ public class PoController {
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;
+    private String socketString;
 
     public PoController(Map<String, PoController> poMap, Socket socket) {
+        socketString = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
+        logger.debug("accept a socket from " + socketString);
         this.poMap = poMap;
         this.socket = socket;
         if (socket != null) {
@@ -57,18 +60,17 @@ public class PoController {
                             poInfo.id = ByteTools.getIdByString(str);
                             if (poInfo.id != null) {
                                 poMap.put(poInfo.id, PoController.this);
-                                logger.debug("a device '" + poInfo.id + "' from " + socket.getInetAddress().getHostAddress());
-                                logger.debug("put the device " + poInfo.id + " into poMap");
+                                logger.debug("put the device '" + poInfo.id + "'(from " + socketString + ") into poMap");
                             }
                         } else if (str.startsWith("FE 01 01")) {
                             poInfo.status = ByteTools.getStatusByString(str);
-                            if (poInfo.targetStatus == null) {
-                                poInfo.targetStatus = poInfo.status;
+                            if (poInfo.getTargetStatus() == null) {
+                                poInfo.setTargetStatus(poInfo.status);
                             }
                             logger.debug(poInfo.id + "'s status --> " + poInfo.status);
                             poInfo.needToChangeStatus = false;
 
-                            if (!poInfo.status.equals(poInfo.targetStatus)) {
+                            if (!poInfo.status.equals(poInfo.getTargetStatus())) {
                                 setDeviceStatus();
                             }
                         } else {
@@ -99,7 +101,8 @@ public class PoController {
                 e.printStackTrace();
             }
         }
-        logger.debug(poInfo.id + " is destroyed.");
+
+        logger.debug(poInfo.id + "from(" + socketString + ") is destroyed.");
     }
 
     private void askIdUntilAnswer() {
@@ -110,10 +113,10 @@ public class PoController {
         PoHelper.askStatus(poInfo, outputStream);
     }
 
-    private void setDeviceStatus() {
+    private synchronized void setDeviceStatus() {
         try {
             PoHelper.setDeviceStatus(poInfo, outputStream);
-            logger.debug("change " + poInfo.id + "'s status to --> " + poInfo.targetStatus);
+            logger.debug("change " + poInfo.id + "'s status to --> " + poInfo.getTargetStatus());
             poInfo.needToChangeStatus = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,8 +127,20 @@ public class PoController {
     public void setDeviceStatus(String binaryString) {
         if (binaryString == null || binaryString.length() != 4)
             return;
-        poInfo.targetStatus = binaryString;
+        poInfo.setTargetStatus(binaryString);
         setDeviceStatus();
+    }
+
+    public void setDeviceStatus(String port, String flag) {
+        try {
+            int iport = Integer.parseInt(port) - 1;
+            StringBuilder sb = new StringBuilder(poInfo.getTargetStatus());
+            sb.setCharAt(iport, flag.toCharArray()[0]);
+            poInfo.setTargetStatus(sb.toString());
+            setDeviceStatus();
+        } catch (Exception e) {
+            logger.debug("args:" + port + "," + flag + " is illegal.");
+        }
     }
 
     public String getDeviceStatus() {

@@ -13,13 +13,14 @@ import java.io.OutputStream;
 public class PoHelper {
     public static void setDeviceStatus(PoInfo poInfo, OutputStream outputStream) throws Exception {
         for (int i = 0; i < 4; i++) {
-            if(poInfo.status.substring(i, i + 1).equals(poInfo.targetStatus.substring(i, i + 1))){
+            if(poInfo.status.substring(i, i + 1).equals(poInfo.getTargetStatus().substring(i, i + 1))){
                 continue;
             }
             String command = "";
-            if ("1".equals(poInfo.targetStatus.substring(i, i + 1))) {
+            String ts = poInfo.getTargetStatus().substring(i, i + 1);
+            if ("1".equals(ts)) {
                 command = CommandDict.turnOnArray[i];
-            } else {
+            } else{
                 command = CommandDict.turnOffArray[i];
             }
             //System.out.println("command --> " + command);
