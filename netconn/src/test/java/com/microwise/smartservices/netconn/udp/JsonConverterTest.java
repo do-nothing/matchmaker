@@ -28,7 +28,7 @@ public class JsonConverterTest {
         mb.getContentBean().setCommand("updateUserInfo");
         mb.getContentBean().setArgs(new String[]{"108.8549","34.19662"});
 
-        json = "{\"id\":\"001\",\"target\":\"007\",\"logType\":\"path\",\"strategy\":\"echoStrategy\",\"quality\":0,\"timestamp\":1494825498577," +
+        json = "{\"id\":\"001\",\"target\":\"007\",\"monitorId\":null,\"logType\":\"path\",\"strategy\":\"echoStrategy\",\"quality\":0,\"timestamp\":1494825498577," +
                 "\"contentBean\":{\"command\":\"updateUserInfo\",\"args\":[\"108.8549\",\"34.19662\"]}}";
     }
 

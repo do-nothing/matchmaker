@@ -61,7 +61,6 @@ public class EchoMessengerIntegrationTest {
         testByBean(sendStr);
     }
 
-
     @Test
     public void concurrencyTest() throws Exception {
         for (int i = 0; i < 1000; i++) {

@@ -6,6 +6,7 @@ package com.microwise.smartservices.netconn.form;
 public class MessageBean {
     private String id;
     private String target;
+    private String monitorId;
     private String logType;
     private String strategy;
     private int quality;
@@ -26,6 +27,14 @@ public class MessageBean {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public String getMonitorId() {
+        return monitorId;
+    }
+
+    public void setMonitorId(String monitorId) {
+        this.monitorId = monitorId;
     }
 
     public String getLogType() {
@@ -73,6 +82,7 @@ public class MessageBean {
         return "MessageBean{" +
                 "id='" + id + '\'' +
                 ", target='" + target + '\'' +
+                ", monitorId='" + monitorId + '\'' +
                 ", logType='" + logType + '\'' +
                 ", strategy='" + strategy + '\'' +
                 ", quality=" + quality +

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microwise.smartservices.persistency.mapper.Power_controllerMapper">
+    <select id="selectByPid" resultType="Power_controller">
+        SELECT * FROM moroes_production.power_controllers where pid = #{pid};
+    </select>
+
+    <select id="updateStatusByPid">
+        update power_controllers set status =  #{status1} where pid = #{pid1};
+    </select>
+</mapper>
