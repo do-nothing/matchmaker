@@ -93,6 +93,7 @@ public class PoController {
         poInfo.isAlive = false;
         if (poMap.get(poInfo.id) == this) {
             poMap.remove(poInfo.id);
+            logger.debug(poInfo.id + " from(" + socketString + ") is destroyed.");
         }
         if (socket != null) {
             try {
@@ -102,7 +103,6 @@ public class PoController {
             }
         }
 
-        logger.debug(poInfo.id + "from(" + socketString + ") is destroyed.");
     }
 
     private void askIdUntilAnswer() {

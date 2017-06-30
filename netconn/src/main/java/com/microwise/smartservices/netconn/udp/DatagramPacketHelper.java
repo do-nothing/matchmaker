@@ -1,5 +1,7 @@
 package com.microwise.smartservices.netconn.udp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.net.DatagramPacket;
@@ -12,6 +14,7 @@ import java.util.HashMap;
  */
 @Component("packetHelper")
 public class DatagramPacketHelper {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private class Address{
         InetAddress address;
         int port;
@@ -37,6 +40,10 @@ public class DatagramPacketHelper {
 
     public DatagramPacket getDatagramPacket(String target, String sendStr){
         Address address = addressPool.get(target);
+        if (target == null){
+            logger.debug("Can not find the device(id:" + target + ") in the addressPool, please check the device if online.");
+            return null;
+        }
         byte[] sendBuf = sendStr.getBytes();
         DatagramPacket packet = new DatagramPacket(sendBuf ,sendBuf.length , address.address , address.port);
         return packet;

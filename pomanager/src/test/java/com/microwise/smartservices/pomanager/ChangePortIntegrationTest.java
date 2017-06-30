@@ -52,7 +52,7 @@ public class ChangePortIntegrationTest {
 
     @Test
     public void groupTest() throws Exception {
-        int flag = 0;
+        int flag = 1;
         mb.getContentBean().setArgs(new Integer[]{1,flag});
         String sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);

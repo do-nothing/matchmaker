@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface Power_controllerMapper {
-    Power_controller selectByPid(String pid);
-    void updateStatusByPid(@Param("pid") String pid, @Param("status") int status);
+public interface Power_controller_portMapper {
+    void updateStatusByPidAndIndex(@Param("pid") String pid, @Param("index") int index, @Param("status") String status);
 }

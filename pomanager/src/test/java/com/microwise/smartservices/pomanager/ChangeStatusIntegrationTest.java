@@ -58,7 +58,7 @@ public class ChangeStatusIntegrationTest {
     public void groupTest() throws Exception {
         for(int i=0; i<500; i++){
             sendRandomCommandTest();
-            Thread.sleep(2500);
+            Thread.sleep(10000);
         }
     }
 }

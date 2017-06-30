@@ -1,6 +1,7 @@
 package com.microwise.smartservices.moroesdb.powerswitch;
 
 import com.microwise.smartservices.persistency.mapper.Power_controllerMapper;
+import com.microwise.smartservices.persistency.mapper.Power_controller_portMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,8 @@ public class DbWriter {
 
     @Resource
     private Power_controllerMapper power_controllerMapper;
+    @Resource
+    private Power_controller_portMapper power_controller_portMapper;
 
     public void saveIfOnline(String id, int isOnline) {
         logger.debug("set " + id + " isOnline " + isOnline);
@@ -30,6 +33,7 @@ public class DbWriter {
     }
 
     public void savePort(String id, int port, String flag) {
-
+        logger.debug("set " + id + " port " + port + " --> " +flag);
+        power_controller_portMapper.updateStatusByPidAndIndex(id, port-1, flag);
     }
 }

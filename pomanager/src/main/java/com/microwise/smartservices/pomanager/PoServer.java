@@ -46,6 +46,7 @@ public class PoServer {
                 while (true) {
                     try {
                         MessageBean mb = messenger.getMessage();
+                        //logger.debug(mb.toString());
                         if ("setStatus".equals(mb.getContentBean().getCommand())) {
                             PoController poController = poMap.get(mb.getTarget());
                             if (poController != null) {
