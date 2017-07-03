@@ -26,7 +26,7 @@ public class SendPoHeartbeat {
     @Before
     public void setUp() throws Exception {
         String message = "{\"id\":\"JY05SfZdGcM0WDdO\",\"target\":\"server\",\"logType\":\"nolog\",\"strategy\":\"po_heartbeat\",\"quality\":0,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"recordStatus\",\"args\":[\"0010\"]}}";
+                "\"contentBean\":{\"command\":\"recordStatus\",\"args\":[\"1110\"]}}";
         mb = jsonConverter.getMessageBean(message);
     }
 

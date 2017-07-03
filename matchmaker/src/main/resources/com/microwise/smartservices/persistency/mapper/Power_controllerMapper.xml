@@ -7,7 +7,7 @@
         SELECT * FROM moroes_production.power_controllers where pid = #{pid};
     </select>
 
-    <select id="updateStatusByPid">
-        update power_controllers set status =  #{status} where pid = #{pid};
-    </select>
+    <update id="updateStatusByPid">
+        update power_controllers set status =  #{status}, updated_at = now() where pid = #{pid};
+    </update>
 </mapper>
