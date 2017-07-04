@@ -1,7 +1,7 @@
 package com.microwise.smartservices;
 
-import com.microwise.smartservices.netconn.form.MessageBean;
 import com.microwise.smartservices.netconn.Messenger;
+import com.microwise.smartservices.netconn.form.MessageBean;
 import com.microwise.smartservices.strategy.MessageProcesser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +84,7 @@ public class ExmanagerServer {
         mb.setQuality(0);
         mb.setStrategy("heartbeat");
 
-        mb.getContentBean().setCommand("set_app_info");
+        mb.getContentBean().setCommand("setAppInfo");
 
         new Thread() {
             public void run() {

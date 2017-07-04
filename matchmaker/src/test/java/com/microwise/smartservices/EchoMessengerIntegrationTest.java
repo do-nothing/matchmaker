@@ -1,7 +1,7 @@
 package com.microwise.smartservices;
 
+import com.microwise.smartservices.netconn.JsonConverter;
 import com.microwise.smartservices.netconn.form.MessageBean;
-import com.microwise.smartservices.netconn.udp.JsonConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -36,6 +36,7 @@ public class EchoMessengerIntegrationTest {
         byte[] sendBuf;
         sendBuf = sendStr.getBytes();
         InetAddress addr = InetAddress.getByName("121.42.196.133");
+        //InetAddress addr = InetAddress.getByName("127.0.0.1");
         int port = 5555;
         DatagramPacket sendPacket
                 = new DatagramPacket(sendBuf, sendBuf.length, addr, port);

@@ -4,22 +4,17 @@ import com.microwise.smartservices.netconn.udp.MessageReceiver;
 import com.microwise.smartservices.netconn.udp.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Arrays;
-import java.util.Properties;
 
 @SpringBootApplication
 public class ExmanagerApplication {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component("appInfoViewer")
 public class AppInfoViewer {
     private long currentTime;
-    private Object[] appInfo = new Object[3];
+    private Object[] appInfo = new Object[4];
 
     public void setAppInfo(Object[] appInfo){
         this.appInfo = appInfo;
@@ -20,6 +20,7 @@ public class AppInfoViewer {
             appInfo[0] = null;
             appInfo[1] = null;
             appInfo[2] = null;
+            appInfo[3] = null;
         }
         return appInfo;
     }

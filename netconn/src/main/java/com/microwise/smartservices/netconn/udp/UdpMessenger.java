@@ -1,7 +1,8 @@
 package com.microwise.smartservices.netconn.udp;
 
+import com.microwise.smartservices.netconn.AbstractMessenger;
+import com.microwise.smartservices.netconn.JsonConverter;
 import com.microwise.smartservices.netconn.form.MessageBean;
-import com.microwise.smartservices.netconn.Messenger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -13,7 +14,7 @@ import java.net.UnknownHostException;
  */
 
 @Component("udpMessenger")
-public class UdpMessenger implements Messenger {
+public class UdpMessenger extends AbstractMessenger {
     @Resource(name = "messageReceiver")
     private MessageReceiver messageReceiver;
     @Resource(name = "messageSender")
@@ -49,6 +50,7 @@ public class UdpMessenger implements Messenger {
     public void sendMessage(MessageBean message) {
         if (message == null)
             return;
+        message.setToken(calcTokenByMessage(message));
         String jsonString = jsonConverter.getJsonString(message);
         DatagramPacket packet = packetHelper.getDatagramPacket(message.getTarget(), jsonString);
         try {

@@ -1,4 +1,4 @@
-package com.microwise.smartservices.netconn.udp;
+package com.microwise.smartservices.netconn;
 
 import java.io.IOException;
 

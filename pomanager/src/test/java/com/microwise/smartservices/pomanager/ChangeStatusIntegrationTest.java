@@ -1,7 +1,7 @@
 package com.microwise.smartservices.pomanager;
 
 import com.microwise.smartservices.netconn.form.MessageBean;
-import com.microwise.smartservices.netconn.udp.JsonConverter;
+import com.microwise.smartservices.netconn.JsonConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public class ChangeStatusIntegrationTest {
     public void groupTest() throws Exception {
         for(int i=0; i<500; i++){
             sendRandomCommandTest();
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         }
     }
 }

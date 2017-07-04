@@ -11,4 +11,5 @@ public interface Messenger {
     void sendMessage(MessageBean messageBean);
     MessageBean getMessage();
     void setServerAddress(String ip, int port) throws UnknownHostException;
+    String calcTokenByMessage(MessageBean messageBean);
 }

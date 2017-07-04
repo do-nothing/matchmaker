@@ -12,6 +12,7 @@ public class MessageBean {
     private int quality;
     private long timestamp;
     private ContentBean contentBean = new ContentBean();
+    private String token;
 
     public String getId() {
         return id;
@@ -77,6 +78,14 @@ public class MessageBean {
         this.contentBean = contentBean;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         return "MessageBean{" +
@@ -88,6 +97,7 @@ public class MessageBean {
                 ", quality=" + quality +
                 ", timestamp=" + timestamp +
                 ", contentBean=" + contentBean +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

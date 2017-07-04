@@ -1,15 +1,10 @@
 package com.microwise.smartservices.pomanager;
 
 import org.junit.Test;
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import static org.junit.Assert.*;
 
 /**
  * Created by lee on 6/23/2017.
