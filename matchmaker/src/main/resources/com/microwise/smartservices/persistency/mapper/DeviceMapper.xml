@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microwise.smartservices.persistency.mapper.DeviceMapper">
+
+    <update id="updateDeviceInfo">
+        update devices set app_id = null, status =  #{status}, note = #{note}, updated_at = now() where id = #{id};
+    </update>
+
+    <update id="updateAppInfo">
+        update devices set app_id = (select id from apps where name = #{appName} and version = #{appVersion}),
+        status = #{status}, note = #{note}, updated_at = now() where id = #{id};
+    </update>
+
+    <insert id="insertDeviceInfo">
+        insert device_histories values(null, #{id}, null, #{status}, now());
+    </insert>
+
+    <insert id="insertAppInfo">
+        insert device_histories values(null, #{id},
+        (select id from apps where name = #{appName} and version = #{appVersion})
+        , #{status}, now());
+    </insert>
+</mapper>

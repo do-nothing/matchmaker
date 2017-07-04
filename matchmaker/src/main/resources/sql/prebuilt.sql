@@ -15,7 +15,7 @@ INSERT INTO event_types VALUES (2, '通信恢复', null, now(), now());
 INSERT INTO event_types VALUES (3, '关机', null, now(), now());
 INSERT INTO event_types VALUES (4, '安装应用', null, now(), now());
 INSERT INTO event_types VALUES (5, '启动应用', null, now(), now());
-INSERT INTO event_types VALUES (6, '应用有人使用', null, now(), now());
+INSERT INTO event_types VALUES (6, '有人使用', null, now(), now());
 INSERT INTO event_types VALUES (7, '应用空闲', null, now(), now());
 
 drop table if exists device_types;

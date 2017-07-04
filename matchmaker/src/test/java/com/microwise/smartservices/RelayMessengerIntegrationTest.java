@@ -1,7 +1,7 @@
 package com.microwise.smartservices;
 
+import com.microwise.smartservices.netconn.JsonConverter;
 import com.microwise.smartservices.netconn.form.MessageBean;
-import com.microwise.smartservices.netconn.udp.JsonConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lee on 5/16/2017.

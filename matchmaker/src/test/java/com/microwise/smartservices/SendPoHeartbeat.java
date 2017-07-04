@@ -1,7 +1,7 @@
 package com.microwise.smartservices;
 
+import com.microwise.smartservices.netconn.JsonConverter;
 import com.microwise.smartservices.netconn.form.MessageBean;
-import com.microwise.smartservices.netconn.udp.JsonConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;

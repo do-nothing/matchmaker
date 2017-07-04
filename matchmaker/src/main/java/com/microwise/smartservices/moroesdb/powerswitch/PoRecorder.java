@@ -1,5 +1,6 @@
 package com.microwise.smartservices.moroesdb.powerswitch;
 
+import com.microwise.smartservices.moroesdb.DbWriter;
 import com.microwise.smartservices.netconn.form.MessageBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class PoRecorder {
 
         PoInfo prePoInfo = poMap.put(id, poInfo);
         if (prePoInfo == null) {
-            dbWriter.saveIfOnline(id, 1);
+            dbWriter.saveIfPoOnline(id, 1);
             dbWriter.saveAllPorts(id, status);
         } else {
             recordIfDifference(id, status, prePoInfo.getStatus());
@@ -77,7 +78,7 @@ public class PoRecorder {
             Map.Entry<String, PoInfo> entry = it.next();
             long timestamp = entry.getValue().getTimestamp();
             if (currentTime - timestamp > 10000) {
-                dbWriter.saveIfOnline(entry.getKey(), 0);
+                dbWriter.saveIfPoOnline(entry.getKey(), 0);
                 it.remove();
             }
         }
