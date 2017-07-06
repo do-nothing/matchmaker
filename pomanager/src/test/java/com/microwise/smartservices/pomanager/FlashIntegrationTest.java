@@ -1,7 +1,7 @@
 package com.microwise.smartservices.pomanager;
 
-import com.microwise.smartservices.netconn.form.MessageBean;
 import com.microwise.smartservices.netconn.JsonConverter;
+import com.microwise.smartservices.netconn.form.MessageBean;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import java.net.InetAddress;
  */
 
 //To test this, you must start MatchmakerApplication first.
-public class ChangePortIntegrationTest {
+public class FlashIntegrationTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private MessageBean mb;
@@ -27,7 +27,7 @@ public class ChangePortIntegrationTest {
     @Before
     public void setUp() throws Exception {
         String message = "{\"id\":\"monitor\",\"target\":\"JY05SfZdGcM0WDdO\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"setStatus\",\"args\":[3, 0]}}";
+                "\"contentBean\":{\"command\":\"setFlashTimes\",\"args\":[2, 21]}}";
         System.out.println(message);
         mb = jsonConverter.getMessageBean(message);
     }
@@ -52,17 +52,17 @@ public class ChangePortIntegrationTest {
 
     @Test
     public void groupTest() throws Exception {
-        int flag = 1;
-        mb.getContentBean().setArgs(new Integer[]{1,flag});
+        int times = 9;
+        mb.getContentBean().setArgs(new Integer[]{1,times});
         String sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
-        mb.getContentBean().setArgs(new Integer[]{2,flag});
+        mb.getContentBean().setArgs(new Integer[]{2,times});
         sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
-        mb.getContentBean().setArgs(new Integer[]{3,flag});
+        mb.getContentBean().setArgs(new Integer[]{3,times});
         sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
-        mb.getContentBean().setArgs(new Integer[]{4,flag});
+        mb.getContentBean().setArgs(new Integer[]{4,times});
         sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
     }

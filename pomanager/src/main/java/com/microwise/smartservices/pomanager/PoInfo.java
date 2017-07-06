@@ -13,6 +13,7 @@ public class PoInfo {
     public String status;
     public boolean isAlive = false;
     public boolean needToChangeStatus = true;
+    public int[] flashTimes = new int[]{0, 0, 0, 0};
 
     private String targetStatus;
 

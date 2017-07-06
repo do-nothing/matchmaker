@@ -57,12 +57,12 @@ public class PoHelper {
                 try {
                     while (poInfo.isAlive) {
                         if (poInfo.needToChangeStatus) {
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                             String command = CommandDict.ASK_STATUS;
                             //System.out.println("command --> " + command);
                             outputStream.write(ByteTools.hexStringToBytes(command));
                         }
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

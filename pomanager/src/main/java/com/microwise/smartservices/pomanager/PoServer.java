@@ -47,18 +47,23 @@ public class PoServer {
                     try {
                         MessageBean mb = messenger.getMessage();
                         //logger.debug(mb.toString());
-                        if ("setStatus".equals(mb.getContentBean().getCommand())) {
-                            PoController poController = poMap.get(mb.getTarget());
-                            if (poController != null) {
+                        PoController poController = poMap.get(mb.getTarget());
+                        if (poController != null) {
+                            if ("setStatus".equals(mb.getContentBean().getCommand())) {
                                 Object[] args = mb.getContentBean().getArgs();
-                                if(args.length == 1){
+                                if (args.length == 1) {
                                     poController.setDeviceStatus(args[0].toString());
-                                }else if(args.length == 2){
+                                } else if (args.length == 2) {
                                     poController.setDeviceStatus(args[0].toString(), args[1].toString());
                                 }
-                            }else{
-                                logger.warn(mb.getTarget() + "is not online!");
+                            } else if ("setFlashTimes".equals(mb.getContentBean().getCommand())){
+                                Object[] args = mb.getContentBean().getArgs();
+                                if (args.length == 2) {
+                                    poController.flash(args[0].toString(), args[1].toString());
+                                }
                             }
+                        } else {
+                            logger.warn(mb.getTarget() + "is not online!");
                         }
                     } catch (Exception e) {
                         logger.warn("Message processing failed!");

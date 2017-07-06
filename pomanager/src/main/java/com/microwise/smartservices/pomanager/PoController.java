@@ -72,6 +72,8 @@ public class PoController {
 
                             if (!poInfo.status.equals(poInfo.getTargetStatus())) {
                                 setDeviceStatus();
+                            } else {
+                                checkFlash();
                             }
                         } else {
                             poInfo.needToChangeStatus = true;
@@ -140,6 +142,38 @@ public class PoController {
             setDeviceStatus();
         } catch (Exception e) {
             logger.debug("args:" + port + "," + flag + " is illegal.");
+        }
+    }
+
+    public void flash(String port, String times) {
+        try {
+            int iport = Integer.parseInt(port) - 1;
+            int itimes = Integer.parseInt(times);
+            poInfo.flashTimes[iport] = itimes;
+            if (itimes > 0)
+                changeDeviceStatus(port);
+        } catch (Exception e) {
+            logger.debug("args:" + port + "," + times + " is illegal.");
+        }
+    }
+
+    private void checkFlash() {
+        for (int i = 0; i < 4; i++) {
+            if (poInfo.flashTimes[i] > 0) {
+                changeDeviceStatus(String.valueOf(i + 1));
+            }
+        }
+    }
+
+    private void changeDeviceStatus(String port) {
+        int iport = Integer.parseInt(port) - 1;
+        poInfo.flashTimes[iport]--;
+        logger.debug("No." + port + " port will flash " + poInfo.flashTimes[iport] + " times.");
+        String flag = poInfo.status.substring(iport, iport + 1);
+        if ("1".equals(flag)) {
+            setDeviceStatus(port, "0");
+        } else {
+            setDeviceStatus(port, "1");
         }
     }
 
