@@ -19,4 +19,7 @@ public interface DeviceMapper {
     void insertAppInfo(@Param("id") String id, @Param("appName") String appName,
                        @Param("appVersion") String appVersion, @Param("status") int eventId);
 
+    void insertAppInfoDebug(@Param("id") String id, @Param("appName") String appName,
+                       @Param("appVersion") String appVersion, @Param("status") int eventId);
+
 }

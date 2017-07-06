@@ -58,6 +58,7 @@ public class DbWriter {
         }
         deviceMapper.updateDeviceInfo(id, eventId, note);
         deviceMapper.insertDeviceInfo(id, eventId);
+        deviceMapper.insertAppInfoDebug(id, null, null, eventId);
     }
 
     public void saveAppInfo(String id, String appName, String appVersion, String isBusy) {
@@ -73,5 +74,6 @@ public class DbWriter {
         }
         deviceMapper.updateAppInfo(id, appName, appVersion, eventId, note);
         deviceMapper.insertAppInfo(id, appName, appVersion, eventId);
+        deviceMapper.insertAppInfoDebug(id, appName, appVersion, eventId);
     }
 }

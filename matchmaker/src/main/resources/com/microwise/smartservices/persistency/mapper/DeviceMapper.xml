@@ -22,4 +22,8 @@
         (select id from apps where name = #{appName} and version = #{appVersion})
         , #{status}, now());
     </insert>
+
+    <insert id="insertAppInfoDebug">
+        insert lijun_device_event values(null, #{id}, #{appName}, #{appVersion}, #{status}, now());
+    </insert>
 </mapper>

@@ -1,8 +1,3 @@
-
-drop database if exists moroes_test;
-create database moroes_test;
-use moroes_test;
-
 CREATE TABLE `apps` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -11,7 +6,7 @@ CREATE TABLE `apps` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) NOT NULL,
@@ -38,10 +33,10 @@ CREATE TABLE `device_histories` (
   `event_type` int(11) NOT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE `device_types` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -57,21 +52,21 @@ CREATE TABLE `devices` (
   `address` varchar(255) DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT NULL,
   `app_id` int(11) DEFAULT NULL,
-  `is_run` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `event_types` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `intents` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -82,6 +77,25 @@ CREATE TABLE `intents` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
+CREATE TABLE `lijun_device_event` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) NOT NULL,
+  `app` varchar(64) DEFAULT NULL,
+  `version` varchar(64) DEFAULT NULL,
+  `status` int(2) NOT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `lijun_power_event` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pid` char(16) NOT NULL,
+  `port` int(2) DEFAULT NULL,
+  `status` int(2) NOT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=433 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `museums` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -90,7 +104,35 @@ CREATE TABLE `museums` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `power_controller_ports` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `power_controller_id` int(11) DEFAULT NULL,
+  `pid` varchar(255) NOT NULL,
+  `index` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `device_id` int(11) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `power_controllers` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pid` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `museum_id` int(11) DEFAULT NULL,
+  `device_type` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_power_controllers_on_pid` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
@@ -117,4 +159,3 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_email` (`email`),
   UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-SELECT * FROM moroes_production.event_types;
