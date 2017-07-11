@@ -26,7 +26,7 @@ public class FlashIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"monitor\",\"target\":\"JY05SfZdGcM0WDdO\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
+        String message = "{\"id\":\"monitor\",\"target\":\"JY05rR7Dp2a1iyeF\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
                 "\"contentBean\":{\"command\":\"setFlashTimes\",\"args\":[2, 21]}}";
         System.out.println(message);
         mb = jsonConverter.getMessageBean(message);

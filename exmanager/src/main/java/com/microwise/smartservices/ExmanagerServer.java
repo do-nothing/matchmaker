@@ -32,6 +32,8 @@ public class ExmanagerServer {
     private int port;
     @Value("${id}")
     private String id;
+    @Value("${monitor}")
+    private String monitord;
 
     @Resource(name="appInfoViewer")
     private AppInfoViewer appInfoViewer ;
@@ -80,6 +82,7 @@ public class ExmanagerServer {
         MessageBean mb = new MessageBean();
         mb.setId(id);
         mb.setTarget("server");
+        mb.setMonitorId(monitord);
         mb.setLogType("nolog");
         mb.setQuality(0);
         mb.setStrategy("heartbeat");

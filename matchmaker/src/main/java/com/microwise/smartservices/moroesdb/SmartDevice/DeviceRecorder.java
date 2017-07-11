@@ -25,13 +25,13 @@ public class DeviceRecorder {
     public DeviceRecorder() {
         new Thread() {
             public void run() {
-                try {
-                    while (true) {
+                while (true) {
+                    try {
                         Thread.sleep(5000);
                         rmExpired();
+                    } catch (Exception e) {
+                        logger.warn("remove expired DeviceInfo Exception.");
                     }
-                } catch (Exception e) {
-                    logger.warn("remove expired poInfo Exception.");
                 }
             }
         }.start();
@@ -69,11 +69,11 @@ public class DeviceRecorder {
             return;
         }
 
-        if (appInfo[1] == null){
+        if (appInfo[1] == null) {
             appInfo[1] = "";
         }
 
-        if (appInfo[3] == null){
+        if (appInfo[3] == null) {
             appInfo[3] = "";
         }
         dbWriter.saveAppInfo(id, appInfo[0].toString(), appInfo[1].toString(), appInfo[3].toString());

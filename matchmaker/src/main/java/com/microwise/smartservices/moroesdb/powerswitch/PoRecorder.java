@@ -24,13 +24,13 @@ public class PoRecorder {
     public PoRecorder() {
         new Thread() {
             public void run() {
-                try {
-                    while (true) {
+                while (true) {
+                    try {
                         Thread.sleep(5000);
                         rmExpired();
+                    } catch (Exception e) {
+                        logger.warn("remove expired poInfo Exception.");
                     }
-                } catch (Exception e) {
-                    logger.warn("remove expired poInfo Exception.");
                 }
             }
         }.start();
