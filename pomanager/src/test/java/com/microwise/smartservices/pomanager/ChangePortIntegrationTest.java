@@ -26,8 +26,8 @@ public class ChangePortIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"monitor\",\"target\":\"JY05SfZdGcM0WDdO\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"setStatus\",\"args\":[3, 0]}}";
+        String message = "{\"id\":\"monitor\",\"target\":\"JY05mmBEm0G73G8d\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
+                "\"contentBean\":{\"command\":\"setStatus\",\"args\":[1, 1]}}";
         System.out.println(message);
         mb = jsonConverter.getMessageBean(message);
     }

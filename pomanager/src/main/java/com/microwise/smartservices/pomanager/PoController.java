@@ -155,7 +155,7 @@ public class PoController {
         }
     }
 
-    public void flash(String port, String times) {
+    public void setFlashTimes(String port, String times) {
         try {
             int iport = Integer.parseInt(port) - 1;
             int itimes = Integer.parseInt(times);
@@ -164,6 +164,15 @@ public class PoController {
                 changeDeviceStatus(port);
         } catch (Exception e) {
             logger.debug("args:" + port + "," + times + " is illegal.");
+        }
+    }
+
+    public synchronized void flashOneTime(String port, String flag){
+        try {
+            PoHelper.flashByPort(port, flag, outputStream);
+            setDeviceStatus(port, flag);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

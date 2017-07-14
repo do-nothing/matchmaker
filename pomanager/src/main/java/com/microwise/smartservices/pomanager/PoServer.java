@@ -60,7 +60,12 @@ public class PoServer {
                             } else if ("setFlashTimes".equals(mb.getContentBean().getCommand())) {
                                 Object[] args = mb.getContentBean().getArgs();
                                 if (args.length == 2) {
-                                    poController.flash(args[0].toString(), args[1].toString());
+                                    poController.setFlashTimes(args[0].toString(), args[1].toString());
+                                }
+                            }else if ("flash".equals(mb.getContentBean().getCommand())) {
+                                Object[] args = mb.getContentBean().getArgs();
+                                if (args.length == 2) {
+                                    poController.flashOneTime(args[0].toString(), args[1].toString());
                                 }
                             }
                         } else {

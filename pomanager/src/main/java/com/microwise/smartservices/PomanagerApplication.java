@@ -48,5 +48,7 @@ public class PomanagerApplication implements CommandLineRunner {
         messageReceiver.startServer();
         messageSender.startServer();
         poServer.startServers();
+
+
     }
 }

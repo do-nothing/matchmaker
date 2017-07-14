@@ -16,6 +16,17 @@ public class CommandDict {
     public static final String OPEN_4 = "FE 05 00 03 FF 00 68 35";
     public static final String CLOSE_4 = "FE 05 00 03 00 00 29 C5";
 
+    public static final String FLASHON_1 = "FE 10 00 03 00 02 04 00 02 00 0A A1 6A";
+    public static final String FLASHON_2 = "FE 10 00 08 00 02 04 00 02 00 0A E0 D9";
+    public static final String FLASHON_3 = "FE 10 00 0D 00 02 04 00 02 00 0A 20 E6";
+    public static final String FLASHON_4 = "FE 10 00 12 00 02 04 00 02 00 0A 61 AA";
+    public static final String FLASHOFF_1 = "FE 10 00 03 00 02 04 00 04 00 0A 41 6B";
+    public static final String FLASHOFF_2 = "FE 10 00 08 00 02 04 00 04 00 0A 00 D8";
+    public static final String FLASHOFF_3 = "FE 10 00 0D 00 02 04 00 04 00 0A C0 E7";
+    public static final String FLASHOFF_4 = "FE 10 00 12 00 02 04 00 04 00 0A 81 AB";
+
     public static String[] turnOnArray = new String[]{OPEN_1, OPEN_2, OPEN_3, OPEN_4};
     public static String[] turnOffArray = new String[]{CLOSE_1, CLOSE_2, CLOSE_3, CLOSE_4};
+    public static String[] flashOnArray = new String[]{FLASHON_1, FLASHON_2, FLASHON_3, FLASHON_4};
+    public static String[] flashOffArray = new String[]{FLASHOFF_1, FLASHOFF_2, FLASHOFF_3, FLASHOFF_4};
 }

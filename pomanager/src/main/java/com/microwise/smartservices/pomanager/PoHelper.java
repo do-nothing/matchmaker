@@ -13,14 +13,14 @@ import java.io.OutputStream;
 public class PoHelper {
     public static void setDeviceStatus(PoInfo poInfo, OutputStream outputStream) throws Exception {
         for (int i = 0; i < 4; i++) {
-            if(poInfo.status.substring(i, i + 1).equals(poInfo.getTargetStatus().substring(i, i + 1))){
+            if (poInfo.status.substring(i, i + 1).equals(poInfo.getTargetStatus().substring(i, i + 1))) {
                 continue;
             }
             String command = "";
             String ts = poInfo.getTargetStatus().substring(i, i + 1);
             if ("1".equals(ts)) {
                 command = CommandDict.turnOnArray[i];
-            } else{
+            } else {
                 command = CommandDict.turnOffArray[i];
             }
             //System.out.println("command --> " + command);
@@ -28,6 +28,21 @@ public class PoHelper {
             outputStream.flush();
             Thread.sleep(100);
         }
+    }
+
+    public static void flashByPort(String port, String flag, OutputStream outputStream) throws Exception {
+        String command = "";
+        int iPort = Integer.parseInt(port) - 1;
+        if ("1".equals(flag)) {
+            command = CommandDict.flashOnArray[iPort];
+        } else if ("0".equals(flag)) {
+            command = CommandDict.flashOffArray[iPort];
+        } else {
+            throw new Exception("flashByPort(String port, String flag) --> flag is illegal.");
+        }
+        //System.out.println("command --> " + command);
+        outputStream.write(ByteTools.hexStringToBytes(command));
+        Thread.sleep(100);
     }
 
     public static void askIdUntilAnswer(PoInfo poInfo, OutputStream outputStream) {

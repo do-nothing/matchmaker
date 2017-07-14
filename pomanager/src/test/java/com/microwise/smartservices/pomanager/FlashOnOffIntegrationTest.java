@@ -1,7 +1,7 @@
 package com.microwise.smartservices.pomanager;
 
-import com.microwise.smartservices.netconn.form.MessageBean;
 import com.microwise.smartservices.netconn.JsonConverter;
+import com.microwise.smartservices.netconn.form.MessageBean;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import java.net.InetAddress;
  */
 
 //To test this, you must start MatchmakerApplication first.
-public class ChangeStatusIntegrationTest {
+public class FlashOnOffIntegrationTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private MessageBean mb;
@@ -27,7 +27,7 @@ public class ChangeStatusIntegrationTest {
     @Before
     public void setUp() throws Exception {
         String message = "{\"id\":\"monitor\",\"target\":\"JY05mmBEm0G73G8d\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"setStatus\",\"args\":[\"1001\"]}}";
+                "\"contentBean\":{\"command\":\"flash\",\"args\":[2, 1]}}";
         System.out.println(message);
         mb = jsonConverter.getMessageBean(message);
     }
@@ -46,19 +46,24 @@ public class ChangeStatusIntegrationTest {
 
     @Test
     public void sendRandomCommandTest() throws Exception {
-        byte rd = (byte)(Math.random()*16);
-        String str = ByteTools.get01ByByte(rd);
-        System.out.println(str);
-        mb.getContentBean().setArgs(new String[]{str});
         String sendStr = jsonConverter.getJsonString(mb);
         testByBean(sendStr);
     }
 
     @Test
     public void groupTest() throws Exception {
-        for(int i=0; i<500; i++){
-            sendRandomCommandTest();
-            Thread.sleep(5000);
-        }
+        int flag = 0;
+        mb.getContentBean().setArgs(new Integer[]{1,flag});
+        String sendStr = jsonConverter.getJsonString(mb);
+        testByBean(sendStr);
+        mb.getContentBean().setArgs(new Integer[]{2,flag});
+        sendStr = jsonConverter.getJsonString(mb);
+        testByBean(sendStr);
+        mb.getContentBean().setArgs(new Integer[]{3,flag});
+        sendStr = jsonConverter.getJsonString(mb);
+        testByBean(sendStr);
+        mb.getContentBean().setArgs(new Integer[]{4,flag});
+        sendStr = jsonConverter.getJsonString(mb);
+        testByBean(sendStr);
     }
 }
