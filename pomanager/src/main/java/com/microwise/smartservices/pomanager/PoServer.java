@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -22,6 +22,7 @@ import java.util.Map;
 public class PoServer {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<String, PoController> poMap = new HashMap<String, PoController>();
+    MessageBean mb = new MessageBean();
 
     @Value("${tcpServer_port}")
     private int tcpServer_port;
@@ -56,7 +57,7 @@ public class PoServer {
                                 } else if (args.length == 2) {
                                     poController.setDeviceStatus(args[0].toString(), args[1].toString());
                                 }
-                            } else if ("setFlashTimes".equals(mb.getContentBean().getCommand())){
+                            } else if ("setFlashTimes".equals(mb.getContentBean().getCommand())) {
                                 Object[] args = mb.getContentBean().getArgs();
                                 if (args.length == 2) {
                                     poController.flash(args[0].toString(), args[1].toString());
@@ -82,7 +83,8 @@ public class PoServer {
                     logger.info(id + " start tcp ServerSocket at 0.0.0.0:" + tcpServer_port);
                     while (true) {
                         Socket socket = serverSocket.accept();
-                        new PoController(poMap, socket);
+                        PoController p = new PoController(poMap, socket);
+                        p.setHeatbeatSender((String id, String status)->sendHeartbeat(id, status));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -99,36 +101,42 @@ public class PoServer {
             e.printStackTrace();
             return;
         }
-        MessageBean mb = new MessageBean();
         mb.setTarget("server");
         mb.setLogType("nolog");
         mb.setQuality(0);
         mb.setStrategy("po_heartbeat");
         mb.getContentBean().setCommand("recordStatus");
 
-        new Thread() {
-            public void run() {
-                while (true) {
-                    try {
-                        mb.setTimestamp(System.currentTimeMillis());
-                        if (poMap.isEmpty()) {
-                            mb.setId(id);
-                            mb.getContentBean().setArgs(null);
-                            messenger.sendMessage(mb);
-                        } else {
-                            for (Map.Entry<String, PoController> entry : poMap.entrySet()) {
-                                mb.setId(entry.getKey());
-                                mb.getContentBean().setArgs(new String[]{entry.getValue().getDeviceStatus()});
-                                messenger.sendMessage(mb);
-                            }
+        new Thread(() ->
+        {
+            while (true) {
+                try {
+                    if (poMap.isEmpty()) {
+                        sendHeartbeat(id, null);
+                    } else {
+                        for (Map.Entry<String, PoController> entry : poMap.entrySet()) {
+                            sendHeartbeat(entry.getKey(), entry.getValue().getDeviceStatus());
                         }
-                        Thread.sleep(5000);
-                    } catch (Exception e) {
-                        logger.warn("Heartbeat sending failed!");
-                        e.printStackTrace();
                     }
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    logger.warn("Heartbeat sending failed!");
+                    e.printStackTrace();
                 }
             }
-        }.start();
+        }).start();
+    }
+
+    private void sendHeartbeat(String id, String status) {
+        String[] args;
+        if (status ==null || status.isEmpty()) {
+            args = null;
+        } else {
+            args = new String[]{status};
+        }
+        mb.setTimestamp(System.currentTimeMillis());
+        mb.setId(id);
+        mb.getContentBean().setArgs(args);
+        messenger.sendMessage(mb);
     }
 }

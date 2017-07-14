@@ -21,6 +21,15 @@ public class PoController {
     private OutputStream outputStream;
     private String socketString;
 
+    @FunctionalInterface
+    interface HeartbeatSender{
+        void sendHeartbeat(String id, String status);
+    }
+    private HeartbeatSender heartbeatSender;
+    public void setHeatbeatSender(HeartbeatSender heartbeatSender){
+        this.heartbeatSender = heartbeatSender;
+    }
+
     public PoController(Map<String, PoController> poMap, Socket socket) {
         socketString = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
         logger.debug("accept a socket from " + socketString);
@@ -73,6 +82,7 @@ public class PoController {
                             if (!poInfo.status.equals(poInfo.getTargetStatus())) {
                                 setDeviceStatus();
                             } else {
+                                heartbeatSender.sendHeartbeat(poInfo.id, poInfo.status);
                                 checkFlash();
                             }
                         } else {
