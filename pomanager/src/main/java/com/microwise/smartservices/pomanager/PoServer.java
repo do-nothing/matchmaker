@@ -62,7 +62,7 @@ public class PoServer {
                                 if (args.length == 2) {
                                     poController.setFlashTimes(args[0].toString(), args[1].toString());
                                 }
-                            }else if ("flash".equals(mb.getContentBean().getCommand())) {
+                            } else if ("flash".equals(mb.getContentBean().getCommand())) {
                                 Object[] args = mb.getContentBean().getArgs();
                                 if (args.length == 2) {
                                     poController.flashOneTime(args[0].toString(), args[1].toString());
@@ -89,7 +89,7 @@ public class PoServer {
                     while (true) {
                         Socket socket = serverSocket.accept();
                         PoController p = new PoController(poMap, socket);
-                        p.setHeatbeatSender((String id, String status)->sendHeartbeat(id, status));
+                        p.setHeatbeatSender((String id, String status) -> sendHeartbeat(id, status));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -133,8 +133,11 @@ public class PoServer {
     }
 
     private void sendHeartbeat(String id, String status) {
+        if (id == null || id.isEmpty()) {
+            return;
+        }
         String[] args;
-        if (status ==null || status.isEmpty()) {
+        if (status == null || status.isEmpty()) {
             args = null;
         } else {
             args = new String[]{status};
