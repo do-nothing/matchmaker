@@ -38,6 +38,12 @@ public class PoRecorder {
 
     public void recordPreprocessing(MessageBean mb) {
         String id = mb.getId();
+        try{
+            Long.parseLong(id);
+        }catch(Exception e){
+            return;
+        }
+
         Object[] args = mb.getContentBean().getArgs();
         if (args == null) {
             return;
@@ -78,8 +84,8 @@ public class PoRecorder {
             Map.Entry<String, PoInfo> entry = it.next();
             long timestamp = entry.getValue().getTimestamp();
             if (currentTime - timestamp > 10000) {
-                dbWriter.saveIfPoOnline(entry.getKey(), 0);
                 it.remove();
+                dbWriter.saveIfPoOnline(entry.getKey(), 0);
             }
         }
     }
