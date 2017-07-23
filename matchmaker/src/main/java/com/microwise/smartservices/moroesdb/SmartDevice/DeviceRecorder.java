@@ -39,6 +39,12 @@ public class DeviceRecorder {
 
     public void recordPreprocessing(MessageBean mb) {
         String id = mb.getId();
+        try {
+            Long.parseLong(id);
+        } catch (Exception e) {
+            return;
+        }
+
         Object[] appInfo = mb.getContentBean().getArgs();
 
         DeviceInfo deviceInfo = new DeviceInfo();
@@ -87,8 +93,8 @@ public class DeviceRecorder {
             Map.Entry<String, DeviceInfo> entry = it.next();
             long timestamp = entry.getValue().getTimestamp();
             if (currentTime - timestamp > 10000) {
-                dbWriter.saveIfDeviceOnline(entry.getKey(), false);
                 it.remove();
+                dbWriter.saveIfDeviceOnline(entry.getKey(), false);
             }
         }
     }

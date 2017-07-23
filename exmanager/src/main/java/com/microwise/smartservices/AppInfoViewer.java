@@ -1,13 +1,18 @@
 package com.microwise.smartservices;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by lee on 6/19/2017.
  */
+@PropertySource("application.properties")
 @Component("appInfoViewer")
 public class AppInfoViewer {
-    private long currentTime;
+    @Value("${defaultApp}")
+    private String defaultApp;
+    private long currentTime = System.currentTimeMillis();
     private Object[] appInfo = new Object[4];
 
     public void setAppInfo(Object[] appInfo){
@@ -22,6 +27,16 @@ public class AppInfoViewer {
             appInfo[2] = null;
             appInfo[3] = null;
         }
+
+        if(!defaultApp.isEmpty() && System.currentTimeMillis() - currentTime > 30000){
+            try {
+                Runtime.getRuntime().exec("cmd /c start restart " + defaultApp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.currentTime = System.currentTimeMillis();
+        }
+
         return appInfo;
     }
 }

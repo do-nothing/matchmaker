@@ -38,11 +38,6 @@ public class PoRecorder {
 
     public void recordPreprocessing(MessageBean mb) {
         String id = mb.getId();
-        try{
-            Long.parseLong(id);
-        }catch(Exception e){
-            return;
-        }
 
         Object[] args = mb.getContentBean().getArgs();
         if (args == null) {
