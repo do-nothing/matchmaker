@@ -26,7 +26,8 @@ public class MatchmakerApplication implements CommandLineRunner {
         app.setBannerMode(Banner.Mode.OFF);
         app.run(args);
     }
-
+    @Resource(name = "moroesTcpServer")
+    private MoroesTcpServer moroesTcpServer;
     @Resource(name = "matchmakerServer")
     private MatchmakerServer matchmakerServer;
     @Resource(name = "messageReceiver")
@@ -65,6 +66,14 @@ public class MatchmakerApplication implements CommandLineRunner {
         messageReceiver.startServer();
         messageSender.startServer();
         matchmakerServer.startServer();
+        logger.info("***************************** " + str + " ***********************************");
+        return str;
+    }
+
+    @Bean
+    public String MoroesTcpServer() {
+        String str = "Moroes tcp server has been started.";
+        moroesTcpServer.startTcpServer();
         logger.info("***************************** " + str + " ***********************************");
         return str;
     }

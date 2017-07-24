@@ -27,7 +27,7 @@ public class FlashOnOffIntegrationTest {
     @Before
     public void setUp() throws Exception {
         String message = "{\"id\":\"monitor\",\"target\":\"JY05mmBEm0G73G8d\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"flash\",\"args\":[2, 1]}}";
+                "\"contentBean\":{\"command\":\"flash\",\"args\":[3, 0]}}";
         System.out.println(message);
         mb = jsonConverter.getMessageBean(message);
     }
