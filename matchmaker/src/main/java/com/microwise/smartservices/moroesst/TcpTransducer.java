@@ -39,15 +39,24 @@ public class TcpTransducer {
             public void run() {
                 try {
                     byte[] bytes = new byte[1024];
-                    int len = -1;
-                    List<Byte> lbyte = new LinkedList<Byte>();
+                    int len = inputStream.read(bytes);
+                    LinkedList<Byte> lbyte = new LinkedList<Byte>();
+                    int count = 0;
+                    int dataLen = -1;
                     while ((len = inputStream.read(bytes)) != -1) {
                         for (int i = 0; i < len; i++) {
                             lbyte.add(bytes[i]);
+                            count++;
+                            if(count == 5){
+                                dataLen = getDataLen(lbyte);
+                            }
+                            if(count == dataLen){
+                                break;
+                            }
                         }
                     }
-                    if (validation(lbyte.toArray(new Byte[0]))) {
-                        outputStream.write(hexStringToBytes("55 AA 81 00 00"));
+                    if (count == dataLen) {
+                        outputStream.write(DataTools.hexStringToBytes("55 AA 81 00 00"));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -56,65 +65,11 @@ public class TcpTransducer {
         }.start();
     }
 
-    private boolean validation(Byte[] bytes) {
-        if (bytes.length < 5)
-            return false;
-        byte[] head = new byte[5];
-        for (int i = 0; i < 5; i++) {
-            head[i] = bytes[i];
+    private int getDataLen( LinkedList<Byte> lByte){
+        byte[] bytes = new byte[]{lByte.pop(), lByte.pop(), lByte.pop()};
+        if("55 AA 01".equals(DataTools.bytesToHexString(bytes))){
+            return DataTools.getIntByBytes(lByte.pop(), lByte.pop()) + 5;
         }
-        byte[] body = new byte[bytes.length - 5];
-        for (int i = 5; i < bytes.length; i++) {
-            body[i-5] = bytes[i];
-        }
-        try {
-            String str = new String(body, "UTF-8");
-            logger.debug(bytesToHexString(head) + " --> " + str);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
-    private byte[] hexStringToBytes(String hexString) {
-        if (hexString == null || hexString.equals("")) {
-            return null;
-        }
-        hexString = hexString.replaceAll(" ", "");
-        hexString = hexString.toUpperCase();
-        int length = hexString.length() / 2;
-        char[] hexChars = hexString.toCharArray();
-        byte[] d = new byte[length];
-        for (int i = 0; i < length; i++) {
-            int pos = i * 2;
-            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
-        }
-        return d;
-    }
-
-    private byte charToByte(char c) {
-        return (byte) "0123456789ABCDEF".indexOf(c);
-    }
-
-    private String bytesToHexString(byte[] bytes) {
-        StringBuilder stringBuilder = new StringBuilder("");
-        if (bytes == null || bytes.length == 0) {
-            return null;
-        }
-        for (int i = 0; i < bytes.length; i++) {
-            int v = bytes[i] & 0xFF;
-            String hv = Integer.toHexString(v);
-            if (hv.length() < 2) {
-                stringBuilder.append(0);
-            }
-            stringBuilder.append(hv);
-            stringBuilder.append(" ");
-        }
-        String rt = stringBuilder.toString();
-        rt = rt.trim();
-        rt = rt.toUpperCase();
-        return rt;
+        return -1;
     }
 }
