@@ -27,7 +27,7 @@ public class ShowBulletinIntegrationTest {
     @Before
     public void setUp() throws Exception {
         String message = "{\"id\":\"monitor\",\"target\":\"2\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":0,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"showBulletin\",\"args\":[2, \"闭馆时间就要到了！请您抓紧时间。\"]}}";
+                "\"contentBean\":{\"command\":\"showBulletin\",\"args\":[6, \"欢迎行政、财务部美女们展厅体验。\"]}}";
         mb = jsonConverter.getMessageBean(message);
     }
 

@@ -1,14 +1,27 @@
 package com.microwise.smartservices.moroesst;
 
+import java.util.List;
+
 /**
  * Created by John on 2017/7/24.
  */
 public class DataTools {
-    public static int getIntByBytes(byte byte1, byte byte2){
-        int value = byte1;
-        value <<= 8;
-        value += byte2;
+    public static int getIntByBytes(byte[] bytes) {
+        int value = 0;
+        for (int i = 0; i < bytes.length; i++) {
+            value <<= 8;
+            value |= (bytes[i] & 0xff);
+        }
         return value;
+    }
+
+    public static byte[] getBytesByInt(int data, int len) {
+        byte[] bytes = new byte[len];
+        for (int i = 0; i < len; i++) {
+            int digit = (len - 1 - i) * 8;
+            bytes[i] = (byte) ((data >> digit) & 0xff);
+        }
+        return bytes;
     }
 
     public static byte[] hexStringToBytes(String hexString) {
@@ -29,6 +42,20 @@ public class DataTools {
 
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    public static String bytesToHexString(List<Byte> lbyte) {
+        byte[] bytes = getBytesFromList(lbyte);
+        return bytesToHexString(bytes);
+    }
+
+    public static byte[] getBytesFromList(List<Byte> lbyte) {
+        byte[] bytes = new byte[lbyte.size()];
+        int i = 0;
+        for (Byte b : lbyte) {
+            bytes[i++] = b;
+        }
+        return bytes;
     }
 
     public static String bytesToHexString(byte[] bytes) {
