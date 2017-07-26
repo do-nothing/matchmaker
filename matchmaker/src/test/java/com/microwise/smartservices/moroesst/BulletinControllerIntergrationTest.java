@@ -36,12 +36,16 @@ public class BulletinControllerIntergrationTest {
         for (int i = 0; i < 4; i++) {
             lByte.add(head[i]);
         }
-        byte[] len = DataTools.getBytesByInt(bulletinBytes.length + 4, 2);
+        byte[] len = DataTools.getBytesByInt(bulletinBytes.length + 6, 2);
         lByte.add(len[0]);
         lByte.add(len[1]);
         byte[] deviceId = DataTools.getBytesByInt(1, 4);
-        for (int i = 0; i < 4; i++) {
+        byte[] times = DataTools.getBytesByInt(2, 2);
+        for (int i = 0; i < deviceId.length; i++) {
             lByte.add(deviceId[i]);
+        }
+        for (int i = 0; i < times.length; i++) {
+            lByte.add(times[i]);
         }
         for (int i = 0; i < bulletinBytes.length; i++) {
             lByte.add(bulletinBytes[i]);

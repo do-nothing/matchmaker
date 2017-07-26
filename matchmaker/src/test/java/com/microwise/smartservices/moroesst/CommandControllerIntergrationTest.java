@@ -60,6 +60,4 @@ public class CommandControllerIntergrationTest {
             e.printStackTrace();
         }
     }
-
-
 }

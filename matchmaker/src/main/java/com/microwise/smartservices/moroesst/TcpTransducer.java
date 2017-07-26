@@ -101,9 +101,10 @@ public class TcpTransducer {
             }
         } else if (messageTypte == 2) {
             int deviceId = DataTools.getIntByBytes(new byte[]{lbyte.pop(), lbyte.pop(), lbyte.pop(), lbyte.pop()});
+            int times = DataTools.getIntByBytes(new byte[]{lbyte.pop(), lbyte.pop()});
             String bulletinStr = new String(DataTools.getBytesFromList(lbyte));
             logger.debug("receive a message for device(" + deviceId + ") --> " + bulletinStr);
-            bulletinController.sendBulletin(deviceId, bulletinStr);
+            bulletinController.sendBulletin(deviceId, times, bulletinStr);
             ack = "55 AA 82 " + messageSeiral + " 00 00";
         } else {
             logger.warn("receive a wrong message type --> " + messageTypte);
