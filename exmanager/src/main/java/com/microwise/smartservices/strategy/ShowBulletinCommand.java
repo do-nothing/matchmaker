@@ -11,6 +11,7 @@ public class ShowBulletinCommand implements IStrategy {
     @Override
     public MessageBean processMessage(MessageBean old) {
         old.setTarget("appSelf");
+        old.setQuality(0);
         return old;
     }
 }

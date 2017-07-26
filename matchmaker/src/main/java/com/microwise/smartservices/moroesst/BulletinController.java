@@ -19,11 +19,12 @@ public class BulletinController {
     private MessageBean mb;
     @Resource(name = "jsonConverter")
     private JsonConverter jsonConverter;
-    @Resource(name="reliableSender")
-    private ReliableSender reliableSender ;
+    @Resource(name="udpMessenger")
+    private Messenger messenger ;
+
 
     public BulletinController() {
-        messageDemo = "{\"id\":\"web\",\"target\":\"2\",\"monitorId\":\"\",\"logType\":\"bulletin\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
+        messageDemo = "{\"id\":\"web\",\"target\":\"2\",\"monitorId\":\"\",\"logType\":\"bulletin\",\"strategy\":\"relay\",\"quality\":2,\"timestamp\":1494825498577," +
                 "\"contentBean\":{\"command\":\"showBulletin\",\"args\":[2, \"离闭馆时间还有30分钟，请抓紧时间游览。\"]}}";
     }
 
@@ -36,6 +37,6 @@ public class BulletinController {
         mb.getContentBean().getArgs()[1] = bulletinStr;
         mb.setTimestamp(System.currentTimeMillis());
 
-        reliableSender.sendMessage(mb);
+        messenger.sendMessage(mb);
     }
 }

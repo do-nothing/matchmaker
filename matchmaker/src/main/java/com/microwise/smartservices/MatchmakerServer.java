@@ -45,7 +45,7 @@ public class MatchmakerServer {
 
                         messenger.sendMessage(newMb);
                     } catch (Exception e) {
-                        logger.warn("Message processing failed! (Please check the monitor.)");
+                        logger.warn("Message processing failed!");
                         //e.printStackTrace();
                     }
                 }

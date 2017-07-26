@@ -40,8 +40,8 @@ public class DatagramPacketHelper {
 
     public DatagramPacket getDatagramPacket(String target, String sendStr){
         Address address = addressPool.get(target);
-        if (target == null){
-            logger.debug("Can not find the device(id:" + target + ") in the addressPool, please check the device if online.");
+        if (address == null){
+            logger.warn("Can not find the device(id:" + target + ") in the addressPool, please check the device if online.");
             return null;
         }
         byte[] sendBuf = sendStr.getBytes();

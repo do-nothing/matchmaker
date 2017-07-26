@@ -3,6 +3,8 @@ package com.microwise.smartservices.netconn.udp;
 import com.microwise.smartservices.netconn.AbstractMessenger;
 import com.microwise.smartservices.netconn.JsonConverter;
 import com.microwise.smartservices.netconn.form.MessageBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,6 +17,7 @@ import java.net.UnknownHostException;
 
 @Component("udpMessenger")
 public class UdpMessenger extends AbstractMessenger {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource(name = "messageReceiver")
     private MessageReceiver messageReceiver;
     @Resource(name = "messageSender")
@@ -23,6 +26,10 @@ public class UdpMessenger extends AbstractMessenger {
     private JsonConverter jsonConverter;
     @Resource(name = "packetHelper")
     private DatagramPacketHelper packetHelper;
+    @Resource(name = "reliableUdpSender")
+    private ReliableUdpSender reliableUdpSender;
+    @Resource(name = "taskStatusCenter")
+    private TaskStatusCenter taskStatusCenter;
 
     @Override
     public MessageBean getMessage() {
@@ -37,8 +44,38 @@ public class UdpMessenger extends AbstractMessenger {
 
         String jsonString = packetHelper.getReceiveStr(packet);
         MessageBean messageBean = jsonConverter.getMessageBean(jsonString);
+        if ("ack".equals(messageBean.getStrategy())) {
+            reliableUdpSender.sendSuccessed(messageBean);
+            return getMessage();
+        }
         packetHelper.setClientAddress(messageBean.getId(), packet);
+        if (messageBean.getQuality() > 0) {
+            replayAck(jsonString);
+            if (messageBean.getQuality() == 2) {
+                if (taskStatusCenter.checkReceivedTask(messageBean.getToken())) {
+                    return getMessage();
+                } else {
+                    taskStatusCenter.setReceivedTask(messageBean.getToken());
+                }
+            }
+        }
+        //logger.debug("receive message" + messageBean);
         return messageBean;
+    }
+
+    private void replayAck(String jsonString) {
+        MessageBean messageBean = jsonConverter.getMessageBean(jsonString);
+        String temp = messageBean.getId();
+        messageBean.setId(messageBean.getTarget());
+        messageBean.setTarget(temp);
+        messageBean.setStrategy("ack");
+        jsonString = jsonConverter.getJsonString(messageBean);
+        DatagramPacket packet = packetHelper.getDatagramPacket(messageBean.getTarget(), jsonString);
+        try {
+            messageSender.sendPacket(packet);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -50,11 +87,16 @@ public class UdpMessenger extends AbstractMessenger {
     public void sendMessage(MessageBean message) {
         if (message == null)
             return;
+        //logger.debug("send message" + message);
         message.setToken(calcTokenByMessage(message));
         String jsonString = jsonConverter.getJsonString(message);
         DatagramPacket packet = packetHelper.getDatagramPacket(message.getTarget(), jsonString);
         try {
-            messageSender.sendPacket(packet);
+            if (message.getQuality() > 0) {
+                reliableUdpSender.sendPacket(packet, message.getToken());
+            } else {
+                messageSender.sendPacket(packet);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
