@@ -104,6 +104,12 @@ public class TcpTransducer {
             logger.debug("receive a message for device(" + deviceId + ") --> " + bulletinStr);
             moroesSender.sendBulletin(deviceId, times, bulletinStr);
             ack = "55 AA 82 " + messageSeiral + " 00 00";
+        }else if (messageTypte == 3) {
+            int deviceId = DataTools.getIntByBytes(new byte[]{lbyte.pop(), lbyte.pop(), lbyte.pop(), lbyte.pop()});
+            String appInfo = new String(DataTools.getBytesFromList(lbyte));
+            logger.debug("receive a restart command --> " + appInfo);
+            commandController.startApp(deviceId, appInfo);
+            ack = "55 AA 83 " + messageSeiral + " 00 00";
         } else {
             logger.warn("receive a wrong message type --> " + messageTypte);
             ack = "55 AA 81 " + messageSeiral + " 00 01 00";

@@ -22,8 +22,8 @@ public class CommandControllerIntergrationTest {
     @Before
     public void init() {
         try {
-            //socket = new Socket("121.42.196.133", 5555);
-            socket = new Socket("127.0.0.1", 5555);
+            socket = new Socket("121.42.196.133", 5555);
+            //socket = new Socket("127.0.0.1", 5555);
             outputStream = socket.getOutputStream();
             inputStream = socket.getInputStream();
         } catch (IOException e) {

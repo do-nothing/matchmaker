@@ -1,9 +1,6 @@
 package com.microwise.smartservices.moroesst;
 
-import com.microwise.smartservices.moroesst.PowerLogic.CommandBean;
-import com.microwise.smartservices.moroesst.PowerLogic.CommandConverter;
-import com.microwise.smartservices.moroesst.PowerLogic.PowerFlashCommand;
-import com.microwise.smartservices.moroesst.PowerLogic.PowerSwitchCommand;
+import com.microwise.smartservices.moroesst.PowerLogic.*;
 import com.microwise.smartservices.netconn.JsonConverter;
 import com.microwise.smartservices.netconn.Messenger;
 import com.microwise.smartservices.netconn.form.MessageBean;
@@ -12,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -88,5 +86,14 @@ public class CommandController {
 
             statusCenter.finishTask(commandsKey);
         }).start();
+    }
+
+    public void startApp(int deviceId, String appInfo){
+        try {
+            AppInfoBean ab = commandConverter.getAppInfo(appInfo);
+            moroesSender.sendStartAppCommand(deviceId, ab.getName(), ab.getVersion());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

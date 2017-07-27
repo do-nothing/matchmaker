@@ -24,4 +24,8 @@ public class CommandConverter {
         }
         return list;
     }
+
+    public AppInfoBean getAppInfo(String json) throws IOException {
+        return mapper.readValue(json, AppInfoBean.class);
+    }
 }

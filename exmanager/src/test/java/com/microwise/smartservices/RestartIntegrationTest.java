@@ -26,8 +26,8 @@ public class RestartIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"monitor\",\"target\":\"lijun\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":0,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"restart\",\"args\":[\"hanzi\",\"\"]}}";
+        String message = "{\"id\":\"monitor\",\"target\":\"1\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
+                "\"contentBean\":{\"command\":\"restart\",\"args\":[\"guanniao\",\"\"]}}";
         mb = jsonConverter.getMessageBean(message);
     }
 
@@ -35,7 +35,7 @@ public class RestartIntegrationTest {
         DatagramSocket client = new DatagramSocket();
         byte[] sendBuf;
         sendBuf = sendStr.getBytes();
-        InetAddress addr = InetAddress.getByName("121.42.196.133");
+        InetAddress addr = InetAddress.getByName("127.0.0.1");
         int port = 5555;
         DatagramPacket sendPacket
                 = new DatagramPacket(sendBuf, sendBuf.length, addr, port);
