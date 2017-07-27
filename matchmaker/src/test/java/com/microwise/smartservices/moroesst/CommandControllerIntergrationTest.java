@@ -40,7 +40,7 @@ public class CommandControllerIntergrationTest {
     }
     @Test
     public void send_BOOT_AUTO() {
-        byte[] commandBytes = ("[{\"command\":\"re_power_on\",\"power_id\":\"JY05mmBEm0G73G8d\",\"port\":1}]").getBytes();
+        byte[] commandBytes = ("[{\"command\":\"re_power_on\",\"power_id\":\"JY05mmBEm0G73G8d\",\"port\":2}]").getBytes();
         send(commandBytes);
     }
     @Test
@@ -58,10 +58,14 @@ public class CommandControllerIntergrationTest {
         for (int i = 0; i < 4; i++) {
             lByte.add(head[i]);
         }
-        byte[] len = DataTools.getBytesByInt(commandBytes.length, 2);
+        byte[] len = DataTools.getBytesByInt(commandBytes.length + 4, 2);
         lByte.add(len[0]);
         lByte.add(len[1]);
         System.out.println(DataTools.bytesToHexString(lByte));
+        byte[] deviceId = DataTools.getBytesByInt(1,4);
+        for (int i = 0; i < 4; i++) {
+            lByte.add(deviceId[i]);
+        }
         for (int i = 0; i < commandBytes.length; i++) {
             lByte.add(commandBytes[i]);
         }

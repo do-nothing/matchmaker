@@ -88,13 +88,13 @@ public class TcpTransducer {
 
         String ack = "";
         if (messageTypte == 1) {
+            Integer deviceId = DataTools.getIntByBytes(new byte[]{lbyte.pop(), lbyte.pop(), lbyte.pop(), lbyte.pop()});
             String commands = new String(DataTools.getBytesFromList(lbyte));
-            logger.debug("receive a command --> " + commands);
-            String commandsKey = commandController.getCommandsKey(commands);
-            if (statusCenter.commandsIsLoak(commandsKey)) {
+            logger.debug("receive a command for device(" + deviceId + ") --> " + commands);
+            if (statusCenter.commandsIsLoak(deviceId)) {
                 ack = "55 AA 81 " + messageSeiral + " 00 01 00";
             } else {
-                commandController.execCommands(commands);
+                commandController.execCommands(deviceId, commands);
                 ack = "55 AA 81 " + messageSeiral + " 00 01 01";
             }
         } else if (messageTypte == 2) {
@@ -104,7 +104,7 @@ public class TcpTransducer {
             logger.debug("receive a message for device(" + deviceId + ") --> " + bulletinStr);
             moroesSender.sendBulletin(deviceId, times, bulletinStr);
             ack = "55 AA 82 " + messageSeiral + " 00 00";
-        }else if (messageTypte == 3) {
+        } else if (messageTypte == 3) {
             int deviceId = DataTools.getIntByBytes(new byte[]{lbyte.pop(), lbyte.pop(), lbyte.pop(), lbyte.pop()});
             String appInfo = new String(DataTools.getBytesFromList(lbyte));
             logger.debug("receive a restart command --> " + appInfo);

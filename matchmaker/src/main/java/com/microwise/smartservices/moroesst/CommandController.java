@@ -36,24 +36,9 @@ public class CommandController {
                 "\"contentBean\":{\"command\":\"showBulletin\",\"args\":[2, \"离闭馆时间还有30分钟，请抓紧时间游览。\"]}}";
     }
 
-    public String getCommandsKey(String commands) {
-        Integer deviceId = null;
-        String powerId = "";
-        List<CommandBean> list = commandConverter.getCommandList(commands);
-        for (CommandBean cb : list) {
-            if (cb.getDevice_id() != null)
-                deviceId = cb.getDevice_id();
-            if (cb.getPower_id() != null)
-                powerId = cb.getPower_id();
-        }
-        String rt = deviceId + "_" + powerId;
-        return rt;
-    }
-
-    public void execCommands(String commands) {
-        String commandsKey = getCommandsKey(commands);
+    public void execCommands(Integer deviceId, String commands) {
         new Thread(() -> {
-            statusCenter.startTask(commandsKey);
+            statusCenter.startTask(deviceId);
 
             List<CommandBean> list = commandConverter.getCommandList(commands);
             for (CommandBean cb : list) {
@@ -63,32 +48,34 @@ public class CommandController {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }else if("shutdown".equalsIgnoreCase(cb.getCommand())){
+                } else if ("shutdown".equalsIgnoreCase(cb.getCommand())) {
                     moroesSender.sendShutdownCommand(cb.getDevice_id());
-                }else if("power_on".equalsIgnoreCase(cb.getCommand())){
+                } else if ("power_on".equalsIgnoreCase(cb.getCommand())) {
                     powerSwitchCommand.switchPowerOn(cb.getPower_id(), cb.getPort());
-                }else if("power_off".equalsIgnoreCase(cb.getCommand())){
+                } else if ("power_off".equalsIgnoreCase(cb.getCommand())) {
                     powerSwitchCommand.switchPowerOff(cb.getPower_id(), cb.getPort());
-                }else if("flash_on".equalsIgnoreCase(cb.getCommand())){
+                } else if ("flash_on".equalsIgnoreCase(cb.getCommand())) {
                     powerFlashCommand.flashPowerOn(cb.getPower_id(), cb.getPort());
-                }else if("flash_off".equalsIgnoreCase(cb.getCommand())){
+                } else if ("flash_off".equalsIgnoreCase(cb.getCommand())) {
                     powerFlashCommand.flashPowerOff(cb.getPower_id(), cb.getPort());
-                }else if("re_power_on".equalsIgnoreCase(cb.getCommand())){
-                    powerSwitchCommand.switchPowerOff(cb.getPower_id(), cb.getPort());
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                } else if ("re_power_on".equalsIgnoreCase(cb.getCommand())) {
+                    if (statusCenter.getPortStatus(cb.getPower_id() + "_" + cb.getPort())) {
+                        powerSwitchCommand.switchPowerOff(cb.getPower_id(), cb.getPort());
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     powerSwitchCommand.switchPowerOn(cb.getPower_id(), cb.getPort());
                 }
             }
 
-            statusCenter.finishTask(commandsKey);
+            statusCenter.finishTask(deviceId);
         }).start();
     }
 
-    public void startApp(int deviceId, String appInfo){
+    public void startApp(int deviceId, String appInfo) {
         try {
             AppInfoBean ab = commandConverter.getAppInfo(appInfo);
             moroesSender.sendStartAppCommand(deviceId, ab.getName(), ab.getVersion());

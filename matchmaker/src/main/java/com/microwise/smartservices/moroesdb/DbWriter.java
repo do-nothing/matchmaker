@@ -1,5 +1,6 @@
 package com.microwise.smartservices.moroesdb;
 
+import com.microwise.smartservices.moroesst.StatusCenter;
 import com.microwise.smartservices.persistency.mapper.DeviceMapper;
 import com.microwise.smartservices.persistency.mapper.Power_controllerMapper;
 import com.microwise.smartservices.persistency.mapper.Power_controller_portMapper;
@@ -16,6 +17,9 @@ import javax.annotation.Resource;
 @Component("dbWriter")
 public class DbWriter {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource(name = "statusCenter")
+    private StatusCenter statusCenter;
 
     @Resource
     private Power_controllerMapper power_controllerMapper;
@@ -43,6 +47,8 @@ public class DbWriter {
         logger.debug("set " + id + " port " + port + " --> " + flag);
         power_controller_portMapper.updateStatusByPidAndIndex(id, port - 1, flag);
         power_eventMapper.insertPowerEvent(id, port, flag);
+
+        statusCenter.setPortStatus(id + "_" + port, "1".equals(flag) ? true : false);
     }
 
     public void saveIfDeviceOnline(String id, boolean isOnline) {
@@ -62,15 +68,15 @@ public class DbWriter {
     }
 
     public void saveAppInfo(String id, String appName, String appVersion, String isBusy) {
-        logger.debug("set device(" + id + ") APP ["  + appName + " (" + appVersion + ")] isBusy --> " + isBusy);
+        logger.debug("set device(" + id + ") APP [" + appName + " (" + appVersion + ")] isBusy --> " + isBusy);
         int eventId = 0;
         String note = "";
-        if("1".equals(isBusy)){
+        if ("1".equals(isBusy)) {
             eventId = 6;
-            note = "APP ["  + appName + " (" + appVersion + ")] is busy.";
-        } else if("0".equals(isBusy)){
+            note = "APP [" + appName + " (" + appVersion + ")] is busy.";
+        } else if ("0".equals(isBusy)) {
             eventId = 7;
-            note = "APP ["  + appName + " (" + appVersion + ")] is free.";
+            note = "APP [" + appName + " (" + appVersion + ")] is free.";
         }
         deviceMapper.updateAppInfo(id, appName, appVersion, eventId, note);
         deviceMapper.insertAppInfo(id, appName, appVersion, eventId);

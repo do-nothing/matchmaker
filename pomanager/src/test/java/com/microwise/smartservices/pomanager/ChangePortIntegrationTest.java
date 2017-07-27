@@ -36,7 +36,8 @@ public class ChangePortIntegrationTest {
         DatagramSocket client = new DatagramSocket();
         byte[] sendBuf;
         sendBuf = sendStr.getBytes();
-        InetAddress addr = InetAddress.getByName("127.0.0.1");
+        //InetAddress addr = InetAddress.getByName("127.0.0.1");
+        InetAddress addr = InetAddress.getByName("121.42.196.133");
         int port = 5555;
         DatagramPacket sendPacket
                 = new DatagramPacket(sendBuf, sendBuf.length, addr, port);
