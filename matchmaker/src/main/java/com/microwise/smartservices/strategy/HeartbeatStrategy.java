@@ -17,6 +17,7 @@ public class HeartbeatStrategy implements IStrategy {
             newMb = old;
             newMb.setTarget("monitor");
         }
-        return newMb;
+        //return newMb;
+        return null;
     }
 }

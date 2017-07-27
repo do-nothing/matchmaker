@@ -10,18 +10,24 @@ import java.util.Set;
  */
 @Component("statusCenter")
 public class StatusCenter {
-    private Set<String> unfinishedTask = new HashSet<String>();
-    public void setUnfinishedTask(String taskKey){
-        unfinishedTask.add(taskKey);
-    }
-    public void rmUnfinishedTask(String taskKey){
-        unfinishedTask.remove(taskKey);
-    }
-    public boolean checkUnfinishedTask(String taskKey){
-        return unfinishedTask.contains(taskKey);
+    private Set<String> performingTask = new HashSet<String>();
+
+    public void startTask(String commandsKey) {
+        performingTask.add(commandsKey);
     }
 
-    public boolean commandsIsLoak(String commandsKey){
+    public void finishTask(String commandsKey) {
+        performingTask.remove(commandsKey);
+    }
+
+    public boolean commandsIsLoak(String commandsKey) {
+        for (String str : performingTask) {
+            if (commandsKey.contains(str)) {
+                return true;
+            } else if (str.contains(commandsKey)) {
+                return true;
+            }
+        }
         return false;
     }
 }

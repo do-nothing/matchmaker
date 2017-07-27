@@ -26,8 +26,8 @@ public class ChangePortIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"monitor\",\"target\":\"JY05rR7Dp2a1iyeF\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
-                "\"contentBean\":{\"command\":\"setStatus\",\"args\":[2, 1]}}";
+        String message = "{\"id\":\"monitor\",\"target\":\"JY05mmBEm0G73G8d\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":1,\"timestamp\":1494825498577," +
+                "\"contentBean\":{\"command\":\"setStatus\",\"args\":[1, 0]}}";
         System.out.println(message);
         mb = jsonConverter.getMessageBean(message);
     }
@@ -36,7 +36,7 @@ public class ChangePortIntegrationTest {
         DatagramSocket client = new DatagramSocket();
         byte[] sendBuf;
         sendBuf = sendStr.getBytes();
-        InetAddress addr = InetAddress.getByName("121.42.196.133");
+        InetAddress addr = InetAddress.getByName("127.0.0.1");
         int port = 5555;
         DatagramPacket sendPacket
                 = new DatagramPacket(sendBuf, sendBuf.length, addr, port);

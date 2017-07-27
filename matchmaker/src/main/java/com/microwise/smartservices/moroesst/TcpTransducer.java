@@ -18,8 +18,8 @@ import java.util.LinkedList;
 public class TcpTransducer {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Resource(name = "bulletinController")
-    private BulletinController bulletinController;
+    @Resource(name = "moroesSender")
+    private MoroesSender moroesSender;
     @Resource(name = "commandController")
     private CommandController commandController;
     @Resource(name = "statusCenter")
@@ -58,10 +58,8 @@ public class TcpTransducer {
                                 dataLen = getDataLen(lbyte);
                                 //System.out.println("dataLen --> " + dataLen);
                             }
-
                             if (count == dataLen) {
                                 responseMessage(lbyte, outputStream);
-
                                 count = 0;
                                 dataLen = -1;
                                 lbyte.clear();
@@ -104,7 +102,7 @@ public class TcpTransducer {
             int times = DataTools.getIntByBytes(new byte[]{lbyte.pop(), lbyte.pop()});
             String bulletinStr = new String(DataTools.getBytesFromList(lbyte));
             logger.debug("receive a message for device(" + deviceId + ") --> " + bulletinStr);
-            bulletinController.sendBulletin(deviceId, times, bulletinStr);
+            moroesSender.sendBulletin(deviceId, times, bulletinStr);
             ack = "55 AA 82 " + messageSeiral + " 00 00";
         } else {
             logger.warn("receive a wrong message type --> " + messageTypte);

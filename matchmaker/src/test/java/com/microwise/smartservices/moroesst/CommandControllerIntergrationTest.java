@@ -22,7 +22,8 @@ public class CommandControllerIntergrationTest {
     @Before
     public void init() {
         try {
-            socket = new Socket("localhost", 5555);
+            //socket = new Socket("121.42.196.133", 5555);
+            socket = new Socket("127.0.0.1", 5555);
             outputStream = socket.getOutputStream();
             inputStream = socket.getInputStream();
         } catch (IOException e) {
@@ -31,11 +32,27 @@ public class CommandControllerIntergrationTest {
     }
 
     @Test
-    public void sendCommands() {
+    public void send_BOOT_MANUAL() {
         byte[] commandBytes = ("[{\"command\":\"power_on\",\"power_id\":\"JY05mmBEm0G73G8d\",\"port\":1}," +
                 "{\"command\":\"sleep\",\"second\":2}," +
                 "{\"command\":\"flash_off\",\"power_id\":\"JY05mmBEm0G73G8d\",\"port\":3}]").getBytes();
-        System.out.println(commandBytes.length);
+        send(commandBytes);
+    }
+    @Test
+    public void send_BOOT_AUTO() {
+        byte[] commandBytes = ("[{\"command\":\"re_power_on\",\"power_id\":\"JY05mmBEm0G73G8d\",\"port\":1}]").getBytes();
+        send(commandBytes);
+    }
+    @Test
+    public void send_CLOSEDOWN_PC() {
+        byte[] commandBytes = ("[{\"command\":\"shutdown\",\"device_id\":1}," +
+                "{\"command\":\"sleep\",\"second\":20}," +
+                "{\"command\":\"power_off\",\"power_id\":\"JY05mmBEm0G73G8d\",\"port\":1}]").getBytes();
+        send(commandBytes);
+    }
+
+    private void send(byte[] commandBytes) {
+        System.out.println("send command --> " + new String(commandBytes));
         List<Byte> lByte = new LinkedList<Byte>();
         byte[] head = DataTools.hexStringToBytes("55 AA 01 01");
         for (int i = 0; i < 4; i++) {

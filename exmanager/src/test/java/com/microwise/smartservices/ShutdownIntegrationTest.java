@@ -26,7 +26,7 @@ public class ShutdownIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        String message = "{\"id\":\"monitor\",\"target\":\"kiosk_001\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":0,\"timestamp\":1494825498577," +
+        String message = "{\"id\":\"monitor\",\"target\":\"1\",\"logType\":\"path\",\"strategy\":\"relay\",\"quality\":0,\"timestamp\":1494825498577," +
                 "\"contentBean\":{\"command\":\"shutdown\",\"args\":[\"元智展厅集中管理平台已发出关机指令，本机将在1分钟后关闭。\"]}}";
         mb = jsonConverter.getMessageBean(message);
     }
@@ -35,7 +35,7 @@ public class ShutdownIntegrationTest {
         DatagramSocket client = new DatagramSocket();
         byte[] sendBuf;
         sendBuf = sendStr.getBytes();
-        InetAddress addr = InetAddress.getByName("121.42.196.133");
+        InetAddress addr = InetAddress.getByName("127.0.0.1");
         int port = 5555;
         DatagramPacket sendPacket
                 = new DatagramPacket(sendBuf, sendBuf.length, addr, port);
