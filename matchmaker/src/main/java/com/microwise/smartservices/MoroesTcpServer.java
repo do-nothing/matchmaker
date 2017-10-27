@@ -31,7 +31,6 @@ public class MoroesTcpServer {
                     logger.info("start tcp ServerSocket at 0.0.0.0:" + tcpServer_port);
                     while (true) {
                         Socket socket = serverSocket.accept();
-                        logger.debug("aaaaaaaaaaa");
                         tcpTransducer.socketHandller(socket);
                     }
                 } catch (IOException e) {

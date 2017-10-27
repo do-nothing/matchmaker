@@ -43,6 +43,7 @@ public class UdpMessenger extends AbstractMessenger {
             return null;
 
         String jsonString = packetHelper.getReceiveStr(packet);
+        logger.debug("receive a message --> " + jsonString);
         MessageBean messageBean = jsonConverter.getMessageBean(jsonString);
         if ("ack".equals(messageBean.getStrategy())) {
             reliableUdpSender.sendSuccessed(messageBean);
@@ -87,9 +88,9 @@ public class UdpMessenger extends AbstractMessenger {
     public void sendMessage(MessageBean message) {
         if (message == null)
             return;
-        //logger.debug("send message" + message);
         message.setToken(calcTokenByMessage(message));
         String jsonString = jsonConverter.getJsonString(message);
+        logger.debug("send a message --> " + jsonString);
         DatagramPacket packet = packetHelper.getDatagramPacket(message.getTarget(), jsonString);
         try {
             if (message.getQuality() > 0) {
